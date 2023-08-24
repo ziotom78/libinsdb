@@ -1,11 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from abc import ABC, abstractmethod
-from datetime import datetime
-import json
-from pathlib import Path
 from typing import Any, Union
-from urllib.parse import urljoin
 from uuid import UUID
 
 
@@ -61,6 +57,11 @@ class InstrumentDatabase(ABC):
         a set and can be retrieved using the method
         :meth:`.get_queried_data_files`.
         """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def query_release(self, tag: str) -> Release:
+        """Retrieve a release"""
         raise NotImplementedError()
 
     def query(

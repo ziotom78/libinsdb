@@ -1,10 +1,12 @@
 # -*- encoding: utf-8 -*-
+
+import datetime
 from uuid import UUID
 
 import pytest
 import requests
 
-from libinsdb import Entity, Quantity, DataFile, RemoteInsDb
+from libinsdb import Entity, Quantity, DataFile, Release, RemoteInsDb
 
 
 def match_authentication(request, username, password):
@@ -87,7 +89,7 @@ def configure_mock_quantity(requests_mock) -> None:
             "format_spec": "http://localhost/api/format_specs/e406caf2-95c0-4e18-8980-a86934479423/",
             "parent_entity": "http://localhost/api/entities/8734a013-4184-412c-ab5a-963388beae34/",
             "data_files": [
-                "http://127.0.0.1:8000/api/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/",
+                "http://localhost/api/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/",
             ],
         },
     )
@@ -224,3 +226,82 @@ def test_metadata(requests_mock):
     assert "070" in metadata
 
     assert abs(metadata["030"]["ellipticity_eff"] - 1.3150000572) < 1e-7
+
+
+def configure_mock_release(requests_mock) -> None:
+    requests_mock.get(
+        "http://localhost/api/releases/planck2018/",
+        json={
+            "tag": "planck2018",
+            "url": "http://localhost/api/releases/planck2018/",
+            "rel_date": "2017-09-26T00:00:00Z",
+            "comment": "Instrument specification for the Planck 2018 data release",
+            "release_document": "http://localhost/release_documents/planck2018_1SUbbzL",
+            "release_document_mime_type": "text/plain",
+            "data_files": [
+                "http://localhost/api/data_files/460024bb-5425-4e2d-bb41-aae7a46be20b/",
+                "http://localhost/api/data_files/205dcd9e-f2bc-44b6-9b4d-a41b7ba42e76/",
+                "http://localhost/api/data_files/90ceeaca-9b4b-48bf-86c8-6c5bff0cad7f/",
+                "http://localhost/api/data_files/c6eb142e-abfe-4783-ac93-84f330624ff1/",
+                "http://localhost/api/data_files/8237f6b7-0974-4221-9efb-9079eaecb4c2/",
+                "http://localhost/api/data_files/3a29d860-2289-4691-82de-1fcb4adfff0e/",
+                "http://localhost/api/data_files/3a514926-ea2e-4e69-996e-2eedc2894a1c/",
+                "http://localhost/api/data_files/43638c42-e42c-49c0-8ee3-09218f5fa73c/",
+                "http://localhost/api/data_files/f7248286-5c1d-481a-af34-50ecd4787935/",
+                "http://localhost/api/data_files/c19c83d5-34cf-4c94-8bf5-3158422de7f0/",
+                "http://localhost/api/data_files/ff8374ac-c347-4924-bf73-dc05d28c0ed3/",
+                "http://localhost/api/data_files/24b9660c-b1a5-491e-916c-b9459219543e/",
+                "http://localhost/api/data_files/43514e4a-bc6b-4a16-95f9-f1bc69f2e9cc/",
+                "http://localhost/api/data_files/18190c40-d4dc-40cc-8d8f-959dc1c1cac0/",
+                "http://localhost/api/data_files/02815676-74a9-4162-90a8-8949cdb19b95/",
+                "http://localhost/api/data_files/2f56c103-589a-4119-86b3-c1a0b9b1dcac/",
+                "http://localhost/api/data_files/b9b97cea-b57b-4daa-b523-3678eac839a1/",
+                "http://localhost/api/data_files/a78a19cc-8043-4beb-a6f1-1ee4e59dd45b/",
+                "http://localhost/api/data_files/c789e9c1-ac22-42bd-a518-322f418dc5ff/",
+                "http://localhost/api/data_files/9de8972a-de9f-49fc-af57-2858d21f3f38/",
+                "http://localhost/api/data_files/896a6499-6bf0-445d-85db-b311c27afc9a/",
+                "http://localhost/api/data_files/3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac/",
+                "http://localhost/api/data_files/d8c0754c-3399-4eee-ae0a-289717960b60/",
+                "http://localhost/api/data_files/c4a3d09d-56e5-49f2-8fb1-3f26d58f3175/",
+                "http://localhost/api/data_files/ae866452-107c-47f8-a506-59ed76777dc6/",
+                "http://localhost/api/data_files/8d324497-1feb-4329-9db5-79fce23a3728/",
+                "http://localhost/api/data_files/436505f3-573e-4c8c-93cb-e5260d1c62da/",
+                "http://localhost/api/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/",
+                "http://localhost/api/data_files/3de6342d-7688-4d9c-ae84-f1216ccad186/",
+                "http://localhost/api/data_files/7bf01b19-3124-46b4-84b5-a6ecace72583/",
+                "http://localhost/api/data_files/fcd0b323-4d7b-406c-95a5-1337a96f611a/",
+                "http://localhost/api/data_files/25109593-c5e2-4b60-b06e-ac5e6c3b7b83/",
+                "http://localhost/api/data_files/87230a9f-70c7-4fa3-8843-834d52c9fd06/",
+                "http://localhost/api/data_files/7ec5b87b-2785-49c6-ba28-ebcb707ebe18/",
+                "http://localhost/api/data_files/f893bd42-3bb3-446b-a3af-b931b6466618/",
+                "http://localhost/api/data_files/b35cc4a5-0628-4f8c-a008-e33062b8dc52/",
+            ],
+            "json_dump": "http://localhost/browse/releases/planck2018/download/",
+        },
+    )
+
+
+def check_release(release: Release, tag: str) -> None:
+    assert release.tag == tag
+    assert release.rel_date == datetime.datetime(
+        year=2017,
+        month=9,
+        day=26,
+        hour=0,
+        minute=0,
+        second=0,
+        tzinfo=datetime.timezone.utc,
+    )
+    assert (
+        release.comment == "Instrument specification for the Planck 2018 data release"
+    )
+    assert len(release.data_files) == 36
+
+
+def test_query_release(requests_mock):
+    connection = configure_connection(requests_mock)
+
+    configure_mock_release(requests_mock)
+    release = connection.query_release(tag="planck2018")
+
+    check_release(release=release, tag="planck2018")

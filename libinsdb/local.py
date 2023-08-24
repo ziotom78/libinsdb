@@ -119,7 +119,7 @@ def _parse_release(obj_dict: dict[str, Any]) -> Release:
     return Release(
         tag=obj_dict["tag"],
         rel_date=datetime.fromisoformat(obj_dict["release_date"]),
-        comments=obj_dict.get("comments", ""),
+        comment=obj_dict.get("comments", ""),
         data_files=set([UUID(x) for x in obj_dict.get("data_files", [])]),
     )
 
@@ -346,3 +346,6 @@ class LocalInsDb(InstrumentDatabase):
                         uuids=", ".join([str(x)[0:6] for x in quantity.data_files]),
                     )
                 )
+
+    def query_release(self, tag: str) -> Release:
+        return self.releases[tag]

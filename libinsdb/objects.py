@@ -264,9 +264,9 @@ class Release:
     """
 
     def __init__(
-        self, tag: str, rel_date: datetime, comments: str, data_files: set[UUID]
+        self, tag: str, rel_date: datetime, comment: str, data_files: set[UUID]
     ):
         self.tag = tag
         self.rel_date = rel_date
-        self.comments = comments
+        self.comment = comment
         self.data_files = data_files

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from datetime import datetime
 from typing import Any, Union
 from urllib.parse import urljoin
 from uuid import UUID
@@ -174,3 +175,18 @@ class RemoteInsDb(InstrumentDatabase):
                 self.add_uuid_to_tracked_list(result.uuid)
 
             return result
+
+    def query_release(self, tag: str) -> Release:
+        response = requests.get(
+            urljoin(self.server_address, f"/api/releases/{tag}/"),
+            headers=self.auth_header,
+        )
+        self._validate_response(response)
+        release_info = response.json()
+
+        return Release(
+            tag=release_info["tag"],
+            rel_date=datetime.fromisoformat(release_info["rel_date"]),
+            comment=release_info["comment"],
+            data_files=set([uuid_from_url(x) for x in release_info["data_files"]]),
+        )
