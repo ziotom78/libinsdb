@@ -5,15 +5,16 @@ from pathlib import Path
 
 import pytest
 
-from libinsdb import InstrumentDatabase
+from libinsdb import LocalDatabase, Entity, Quantity
+from libinsdb.objects import DataFile
 
 
 def load_mock_database():
     curpath = Path(__file__).parent
-    return InstrumentDatabase(local_folder=curpath / "mock_db")
+    return LocalDatabase(path=curpath / "mock_db")
 
 
-def test_imo_key_errors():
+def test_key_errors():
     imo = load_mock_database()
 
     with pytest.raises(KeyError):
@@ -43,71 +44,69 @@ def test_imo_key_errors():
         imo.query("/1.0/instrument/beams/horn01/horn01_synth")
 
 
-def test_imo_query_uuid():
+def test_query_uuid():
     db = load_mock_database()
 
-    uuid = UUID("dd32cb51-f7d5-4c03-bf47-766ce87dc3ba")
+    uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     entity = db.query(f"/entities/{uuid}")
+    assert isinstance(entity, Entity)
     assert entity.uuid == uuid
 
-    uuid = UUID("e9916db9-a234-4921-adfd-6c3bb4f816e9")
+    uuid = UUID("6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53")
     quantity = db.query(f"/quantities/{uuid}")
+    assert isinstance(quantity, Quantity)
     assert quantity.uuid == uuid
 
-    uuid = UUID("37bb70e4-29b2-4657-ba0b-4ccefbc5ae36")
+    uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
     data_file = db.query(f"/data_files/{uuid}")
+    assert isinstance(data_file, DataFile)
     assert data_file.uuid == uuid
-    assert data_file.metadata["ellipticity"] == 0.0
-    assert data_file.metadata["fwhm_deg"] == 1.0
 
     data_file = db.query(uuid)
+    assert isinstance(data_file, DataFile)
     assert data_file.uuid == uuid
 
 
-def test_imo_get_queried_objects():
+def test_get_queried_objects():
     db = load_mock_database()
 
-    entity_uuid = UUID("dd32cb51-f7d5-4c03-bf47-766ce87dc3ba")
+    entity_uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     _ = db.query(f"/entities/{entity_uuid}")
 
-    quantity_uuid = UUID("e9916db9-a234-4921-adfd-6c3bb4f816e9")
+    quantity_uuid = UUID("6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53")
     _ = db.query(f"/quantities/{quantity_uuid}")
 
     # This is not being tracked…
-    data_file_uuid = UUID("a6dd07ee-9721-4453-abb1-e58aa53a9c01")
-    _ = db.query(f"/data_files/{data_file_uuid}", track=False)
+    untracked_data_file_uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
+    _ = db.query(f"/data_files/{untracked_data_file_uuid}", track=False)
 
     # …but this will be
-    data_file_uuid = UUID("37bb70e4-29b2-4657-ba0b-4ccefbc5ae36")
-    _ = db.query(f"/data_files/{data_file_uuid}")
+    tracked_data_file_uuid = UUID("25109593-c5e2-4b60-b06e-ac5e6c3b7b83")
+    _ = db.query(f"/data_files/{tracked_data_file_uuid}")
 
-    release_data_file_uuid = UUID("bd8e16eb-2e9d-46dd-a971-f446e953b9dc")
-    _ = db.query("/1.0/instrument/beams/horn01/horn01_grasp")
-
-    assert tuple(db.get_queried_entities()) == (entity_uuid,)
-    assert tuple(db.get_queried_quantities()) == (quantity_uuid,)
+    release_data_file_uuid = UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
+    _ = db.query("/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass")
 
     queried_files = db.get_queried_data_files()
-    assert len(queried_files) == 2
-    assert data_file_uuid in queried_files
+    assert untracked_data_file_uuid not in queried_files
+    assert tracked_data_file_uuid in queried_files
     assert release_data_file_uuid in queried_files
 
 
-def test_imo_query_release():
+def test_query_release():
     db = load_mock_database()
 
-    uuid = UUID("bd8e16eb-2e9d-46dd-a971-f446e953b9dc")
-    data_file = db.query("/releases/1.0/instrument/beams/horn01/horn01_grasp")
-    assert data_file.uuid == uuid
-
-    data_file = db.query("/1.0/instrument/beams/horn01/horn01_grasp")
+    uuid = UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
+    data_file = db.query("/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass")
     assert data_file.uuid == uuid
 
 
-def test_imo_entry_hierarchy():
+def test_entry_hierarchy():
     db = load_mock_database()
 
-    # This is the "beams" object
-    uuid = UUID("04c53542-e8a8-421f-aa3c-201abba1575d")
+    # This is the "27M" entity
+    uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     child_entity = db.query_entity(uuid)
-    assert child_entity.parent.uuid == UUID("2180affe-f9c3-4048-a407-6bd4d3ad71e5")
+
+    # Check that the parent is the "frequency_030_ghz" entity
+    assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")

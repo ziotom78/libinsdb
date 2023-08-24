@@ -18,7 +18,17 @@ class DbObject(ABC):
     """An abstract class representing a local/remote database
 
     This is the base class for :class:`.FlatFileDatabase` (local storage) and
-    for :class:`.RestfulConnection`"""
+    for :class:`.RestfulConnection`
+    """
+
+    def __init__(self):
+        self._tracked_data_files = set()  # type: set[UUID]
+
+    def add_uuid_to_tracked_list(self, uuid: UUID) -> None:
+        self._tracked_data_files.add(uuid)
+
+    def get_queried_data_files(self) -> set[UUID]:
+        return self._tracked_data_files
 
     @abstractmethod
     def query_entity(self, identifier: UUID) -> Entity:
@@ -33,7 +43,9 @@ class DbObject(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def query_data_file(self, identifier: Union[str, UUID]) -> DataFile:
+    def query_data_file(
+        self, identifier: Union[str, UUID], track: bool = True
+    ) -> DataFile:
         """Retrieve a data file
 
         The `identifier` parameter can be one of the following types:
@@ -45,11 +57,16 @@ class DbObject(ABC):
 
            /relname/sequence/of/entities/…/quantity
 
+        If `track` is ``True``, the UUID of the object will be saved in
+        a set and can be retrieved using the method
+        :meth:`.get_queried_data_files`.
         """
         raise NotImplementedError()
 
     def query(
-        self, identifier: Union[str, UUID]
+        self,
+        identifier: Union[str, UUID],
+        track: bool = True,
     ) -> Union[DataFile, Quantity, Entity, FormatSpecification]:
         """Query an object from the database
 
@@ -76,7 +93,7 @@ class DbObject(ABC):
             return self.query_data_file(identifier)
 
         for obj_type_name, method_to_call in [
-            ("/data_files", self.query_data_file),
+            ("/data_files", lambda uuid: self.query_data_file(uuid, track=track)),
             ("/quantities", self.query_quantity),
             ("/entities", self.query_entity),
             ("/format_specs", self.query_format_spec),
@@ -132,10 +149,12 @@ def uuid_from_url(url: str) -> UUID:
 
 
 class RestfulConnection(DbObject):
-    def __init__(self, server: str, username: str, password: str):
-        self.server = server
+    def __init__(self, server_address: str, username: str, password: str):
+        super().__init__()
+
+        self.server_address = server_address
         response = requests.post(
-            urljoin(self.server, "/api/login"),
+            urljoin(self.server_address, "/api/login"),
             data={"username": username, "password": password},
         )
         self._validate_response(response)
@@ -149,7 +168,7 @@ class RestfulConnection(DbObject):
 
     def query_entity(self, identifier: UUID) -> Entity:
         response = requests.get(
-            urljoin(self.server, f"/api/entities/{identifier}/"),
+            urljoin(self.server_address, f"/api/entities/{identifier}/"),
             headers=self.auth_header,
         )
         self._validate_response(response)
@@ -165,7 +184,7 @@ class RestfulConnection(DbObject):
 
     def query_format_spec(self, identifier: UUID) -> FormatSpecification:
         response = requests.get(
-            urljoin(self.server, f"/api/format_specs/{identifier}/"),
+            urljoin(self.server_address, f"/api/format_specs/{identifier}/"),
             headers=self.auth_header,
         )
         self._validate_response(response)
@@ -182,7 +201,7 @@ class RestfulConnection(DbObject):
 
     def query_quantity(self, identifier: UUID) -> Quantity:
         response = requests.get(
-            urljoin(self.server, f"/api/quantities/{identifier}/"),
+            urljoin(self.server_address, f"/api/quantities/{identifier}/"),
             headers=self.auth_header,
         )
         self._validate_response(response)
@@ -199,11 +218,7 @@ class RestfulConnection(DbObject):
     def _create_data_file_from_response(self, response: requests.Response) -> DataFile:
         data_file_info = response.json()
 
-        metadata_str = getattr(data_file_info, "metadata", "")
-        if metadata_str != "":
-            parsed_metadata = json.loads(metadata_str)
-        else:
-            parsed_metadata = {}
+        parsed_metadata = data_file_info.get("metadata", None)
 
         return DataFile(
             uuid=uuid_from_url(data_file_info["uuid"]),
@@ -224,29 +239,40 @@ class RestfulConnection(DbObject):
             ),
         )
 
-    def _query_data_file_from_uuid(self, identifier: UUID) -> DataFile:
+    def _query_data_file_from_uuid(self, uuid: UUID, track: bool) -> DataFile:
         response = requests.get(
-            urljoin(self.server, f"/api/data_files/{identifier}/"),
+            urljoin(self.server_address, f"/api/data_files/{uuid}/"),
             headers=self.auth_header,
         )
         self._validate_response(response)
+
+        if track:
+            self.add_uuid_to_tracked_list(uuid)
+
         return self._create_data_file_from_response(response)
 
-    def query_data_file(self, identifier: Union[str, UUID]) -> DataFile:
+    def query_data_file(
+        self, identifier: Union[str, UUID], track: bool = True
+    ) -> DataFile:
         if isinstance(identifier, UUID):
-            return self._query_data_file_from_uuid(identifier)
+            return self._query_data_file_from_uuid(uuid=identifier, track=track)
 
         try:
             uuid = UUID(identifier)
-            return self._query_data_file_from_uuid(uuid)
+            return self._query_data_file_from_uuid(uuid, track=track)
         except ValueError:
             # `identifier` is a path into the tree
             response = requests.get(
-                urljoin(self.server, f"/releases/{identifier}/"),
+                urljoin(self.server_address, f"/releases/{identifier}/"),
                 headers=self.auth_header,
             )
             self._validate_response(response)
-            return self._create_data_file_from_response(response)
+            result = self._create_data_file_from_response(response)
+
+            if track:
+                self.add_uuid_to_tracked_list(result.uuid)
+
+            return result
 
 
 _DB_FLATFILE_SCHEMA_FILE_NAME = "schema.json"
@@ -273,7 +299,7 @@ def _parse_format_spec(obj_dict: dict[str, Any]) -> FormatSpecification:
 
 
 def _parse_entity(
-    obj_dict: dict[str, Any], base_path="", parent=None
+    obj_dict: dict[str, Any], base_path="", parent: UUID | None = None
 ) -> tuple[Entity, list[dict[str, Any]]]:
     name = obj_dict["name"]
     return (
@@ -288,15 +314,25 @@ def _parse_entity(
 
 
 def _walk_entity_tree_and_parse(
-    dictionary: dict[UUID, Any], objs: list[dict[str, Any]], base_path="", parent=None
+    dictionary: dict[UUID, Any],
+    objs: list[dict[str, Any]],
+    base_path: str = "",
+    parent: UUID | None = None,
 ):
     for obj_dict in objs:
-        obj, children = _parse_entity(obj_dict, base_path, parent=parent)
+        obj, children = _parse_entity(
+            obj_dict=obj_dict,
+            base_path=base_path,
+            parent=parent,
+        )
         dictionary[obj.uuid] = obj
 
         if children:
             _walk_entity_tree_and_parse(
-                dictionary, children, f"{base_path}/{obj.name}", parent=obj
+                dictionary=dictionary,
+                objs=children,
+                base_path=f"{base_path}/{obj.name}",
+                parent=obj.uuid,
             )
 
 
@@ -332,7 +368,7 @@ def parse_data_file(obj_dict: dict[str, Any]) -> DataFile:
         uuid=UUID(obj_dict["uuid"]),
         name=obj_dict.get("name", ""),
         upload_date=datetime.fromisoformat(obj_dict["upload_date"]),
-        metadata=obj_dict.get("metadata", {}),
+        metadata=obj_dict.get("metadata", None),
         data_file_local_path=file_name,
         quantity=UUID(obj_dict["quantity"]),
         spec_version=obj_dict.get("spec_version", ""),
@@ -340,6 +376,7 @@ def parse_data_file(obj_dict: dict[str, Any]) -> DataFile:
         plot_file_local_path=plot_file_name,
         plot_mime_type=obj_dict.get("plot_mime_type", ""),
         comment=obj_dict.get("comment", ""),
+        release_tags=None,  # We'll fill this later
     )
 
 
@@ -385,6 +422,8 @@ class LocalDatabase(DbObject):
     """A class that interfaces with a flat-file representation of a database."""
 
     def __init__(self, path: Union[str, Path]):
+        super().__init__()
+
         self.path = Path(path)
 
         self.format_specs = {}  # type: dict[UUID, FormatSpecification]
@@ -471,6 +510,14 @@ class LocalDatabase(DbObject):
             quantity = self.quantities[cur_data_file.quantity]
             quantity.data_files.add(cur_uuid)
 
+        self._fill_release_tags()
+
+    def _fill_release_tags(self):
+        "Fix the value of `release_tags` for each data file"
+        for cur_release_tag, cur_release in self.releases.items():
+            for cur_uuid in cur_release.data_files:
+                self.data_files[cur_uuid].release_tags.add(cur_release_tag)
+
     def quantity_path(self, uuid: UUID) -> str:
         quantity = self.quantities[uuid]
         assert quantity.entity
@@ -486,7 +533,7 @@ class LocalDatabase(DbObject):
     def query_quantity(self, identifier: UUID) -> Quantity:
         return self.quantities[identifier]
 
-    def query_data_file(self, identifier: Union[str, UUID]) -> DataFile:
+    def query_data_file(self, identifier: str | UUID, track: bool = True) -> DataFile:
         """Retrieve a data file
 
         The `identifier` parameter can be one of the following types:
@@ -500,10 +547,17 @@ class LocalDatabase(DbObject):
 
         """
         if isinstance(identifier, UUID):
+            if track:
+                self.add_uuid_to_tracked_list(uuid=identifier)
+
             return self.data_files[identifier]
         else:
             try:
                 uuid = UUID(identifier)
+
+                if track:
+                    self.add_uuid_to_tracked_list(uuid=identifier)
+
                 return self.data_files[uuid]
             except ValueError:
                 # We're dealing with a path
@@ -535,6 +589,9 @@ class LocalDatabase(DbObject):
                 # the one listed in the release
                 for cur_uuid in quantity.data_files:
                     if cur_uuid in release_uuids:
+                        if track:
+                            self.add_uuid_to_tracked_list(uuid=cur_uuid)
+
                         return self.data_files[cur_uuid]
 
                 raise KeyError(

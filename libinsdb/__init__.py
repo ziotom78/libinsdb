@@ -1,15 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-from .instrumentdb import InstrumentDatabase
 from .objects import FormatSpecification, Entity, Quantity, Release
-from .dbobject import InstrumentDbFormatError, LocalDatabase
+from .dbobject import InstrumentDbFormatError, RestfulConnection, LocalDatabase
 
 __all__ = [
-    "InstrumentDatabase",
     "FormatSpecification",
     "Entity",
     "Quantity",
     "Release",
     "InstrumentDbFormatError",
+    "RestfulConnection",
     "LocalDatabase",
 ]
