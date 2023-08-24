@@ -296,6 +296,7 @@ def check_release(release: Release, tag: str) -> None:
         release.comment == "Instrument specification for the Planck 2018 data release"
     )
     assert len(release.data_files) == 36
+    assert UUID("25109593-c5e2-4b60-b06e-ac5e6c3b7b83") in release.data_files
 
 
 def test_query_release(requests_mock):
