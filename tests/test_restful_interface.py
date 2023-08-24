@@ -4,9 +4,7 @@ from uuid import UUID
 import pytest
 import requests
 
-from libinsdb import Entity, Quantity
-from libinsdb.dbobject import RestfulConnection
-from libinsdb.objects import DataFile
+from libinsdb import Entity, Quantity, DataFile, RemoteInsDb
 
 
 def match_authentication(request, username, password):
@@ -28,9 +26,9 @@ def create_mock_login(requests_mock, username: str, password: str) -> None:
     )
 
 
-def configure_connection(requests_mock) -> RestfulConnection:
+def configure_connection(requests_mock) -> RemoteInsDb:
     create_mock_login(requests_mock=requests_mock, username="test", password="12345")
-    connection = RestfulConnection(
+    connection = RemoteInsDb(
         server_address="http://localhost",
         username="test",
         password="12345",

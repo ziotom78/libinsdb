@@ -11,8 +11,8 @@ from uuid import UUID
 
 import pytest
 
-from libinsdb import RestfulConnection, LocalDatabase
-from libinsdb.dbobject import DbObject
+from libinsdb import RemoteInsDb, LocalInsDb
+from libinsdb.instrumentdb import InstrumentDatabase
 from .test_restful_interface import (
     create_mock_login,
     configure_mock_entity,
@@ -24,7 +24,7 @@ from .test_restful_interface import (
 )
 
 
-def check_all_objects_in_db(insdb: DbObject) -> None:
+def check_all_objects_in_db(insdb: InstrumentDatabase) -> None:
     uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     entity = insdb.query_entity(uuid)
     check_entity(entity=entity, uuid=uuid)
@@ -44,9 +44,9 @@ def check_all_objects_in_db(insdb: DbObject) -> None:
     assert data_file.uuid == UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
 
 
-def create_local_db() -> DbObject:
+def create_local_db() -> InstrumentDatabase:
     cur_path = Path(__file__).parent
-    return LocalDatabase(path=cur_path / "mock_db")
+    return LocalInsDb(path=cur_path / "mock_db")
 
 
 def test_locally():
@@ -81,7 +81,7 @@ def test_remotely(requests_mock):
         },
     )
 
-    insdb = RestfulConnection(
+    insdb = RemoteInsDb(
         server_address="http://localhost", username="test", password="12345"
     )
     check_all_objects_in_db(insdb)

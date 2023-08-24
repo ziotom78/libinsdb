@@ -5,13 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from libinsdb import LocalDatabase, Entity, Quantity
-from libinsdb.objects import DataFile
+from libinsdb import LocalInsDb, Entity, Quantity, DataFile
 
 
 def load_mock_database():
     curpath = Path(__file__).parent
-    return LocalDatabase(path=curpath / "mock_db")
+    return LocalInsDb(path=curpath / "mock_db")
 
 
 def test_key_errors():
