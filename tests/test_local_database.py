@@ -3,14 +3,14 @@
 from uuid import UUID
 from pathlib import Path
 
-import pytest
+import pytest  # type: ignore
 
 from libinsdb import LocalInsDb, Entity, Quantity, DataFile
 
 
 def load_mock_database():
     curpath = Path(__file__).parent
-    return LocalInsDb(path=curpath / "mock_db")
+    return LocalInsDb(storage_path=curpath / "mock_db")
 
 
 def test_key_errors():

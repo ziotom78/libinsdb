@@ -3,9 +3,6 @@
 import datetime
 from uuid import UUID
 
-import pytest
-import requests
-
 from libinsdb import Entity, Quantity, DataFile, Release, RemoteInsDb
 
 
@@ -133,6 +130,20 @@ def configure_mock_data_file(requests_mock) -> None:
             "download_link": "http://localhost/browse/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/download/",
             "plot_download_link": "http://localhost/browse/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/plot/",
         },
+    )
+
+    requests_mock.get(
+        "http://localhost/browse/data_files/ed8ef738-ef1e-474b-b867-646c74f89694/download/",
+        content=b",wavenumber_invcm,transmission,uncertainty\n"
+        b"5,21.8,1.0908176716543607e-09,0.0\n"
+        b"6,21.9,1.9241507361196885e-09,0.0\n"
+        b"7,22.0,3.1679772841539037e-09,0.0\n"
+        b"8,22.1,4.288060511185285e-09,0.0\n"
+        b"9,22.2,1.0745973679430684e-08,0.0\n"
+        b"10,22.3,1.951970852469696e-08,0.0\n"
+        b"11,22.4,5.117663335253504e-08,0.0\n"
+        b"12,22.5,4.8466211865735716e-08,0.0\n"
+        b"13,22.6,1.4357553979899462e-07,0.0\n",
     )
 
 
@@ -306,3 +317,13 @@ def test_query_release(requests_mock):
     release = connection.query_release(tag="planck2018")
 
     check_release(release=release, tag="planck2018")
+
+
+def test_download_file(requests_mock):
+    connection = configure_connection(requests_mock)
+    configure_mock_data_file(requests_mock)
+
+    uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
+    data_file = connection.query_data_file(uuid)
+    with data_file.open_data_file(connection) as f:
+        assert f.read(11) == b",wavenumber"

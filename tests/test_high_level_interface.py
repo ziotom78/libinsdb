@@ -9,9 +9,7 @@ on remotely through the RESTful API.
 from pathlib import Path
 from uuid import UUID
 
-import pytest
-
-from libinsdb import RemoteInsDb, LocalInsDb
+from libinsdb import RemoteInsDb, LocalInsDb, DataFile
 from libinsdb.instrumentdb import InstrumentDatabase
 from .test_restful_interface import (
     create_mock_login,
@@ -34,19 +32,22 @@ def check_all_objects_in_db(insdb: InstrumentDatabase) -> None:
     check_quantity(quantity=quantity, uuid=uuid)
 
     uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
-    data_file = insdb.query_data_file(uuid)
-    check_data_file(data_file=data_file, uuid=uuid)
+    data_file1 = insdb.query_data_file(uuid)
+    check_data_file(data_file=data_file1, uuid=uuid)
+    with data_file1.open_data_file(insdb) as f:
+        assert f.read(11) == b",wavenumber"
 
-    data_file = insdb.query_data_file(str(uuid))
-    check_data_file(data_file=data_file, uuid=uuid)
+    data_file2 = insdb.query_data_file(str(uuid))
+    check_data_file(data_file=data_file2, uuid=uuid)
 
-    data_file = insdb.query("/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass")
-    assert data_file.uuid == UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
+    data_file3 = insdb.query("/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass")
+    assert isinstance(data_file3, DataFile)
+    assert data_file3.uuid == UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
 
 
 def create_local_db() -> InstrumentDatabase:
     cur_path = Path(__file__).parent
-    return LocalInsDb(path=cur_path / "mock_db")
+    return LocalInsDb(storage_path=cur_path / "mock_db")
 
 
 def test_locally():
