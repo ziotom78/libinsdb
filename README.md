@@ -1,6 +1,6 @@
 # Libinsdb
 
-A library to interface Python scripts with an InstrumentDB database.
+A library to interface Python scripts with an [InstrumentDB](https://github.com/ziotom78/instrumentdb) database.
 
 ## Documentation
 
