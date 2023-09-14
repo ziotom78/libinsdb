@@ -6,17 +6,50 @@ database that can be used to hold specification and design documents about any s
 to access the database either through its RESTful HTTP API or by directly reading a dump
 of the database saved locally.
 
-Here is an example showing how to use it:
+Here is an example showing how to access a local instance of an instrument database:
 
 .. code-block:: python
 
-    from libinsdb import InstrumentDatabase
+    from libinsdb import LocalInsDb
 
-    insdb = InstrumentDatabase(
-        local_folder="/opt/my_database_dump",
+    # The instrument database is kept locally, so it was
+    # dumped from a running InstrumentDB instance
+    insdb = LocalInsDb(
+        storage_path="/opt/my_database_dump",
     )
 
-    data_file = insdb.query_data_file(
-        "/releases/v1.0/telescope/primary_mirror/design/cad20230101.step"
+    data_file = insdb.query(
+        "/releases/planck2021/LFI/frequency_030_ghz/bandpass",
     )
 
+    print(f'Going to read file "{data_file.name}" from the database…")
+    with data_file.open_data_file(insdb) as my_file:
+        contents = my_file.read()
+
+
+It's equally easy to access a remote database; in this case we access the demo
+available at https://insdbdemo.fisica.unimi.it:
+
+.. code-block:: python
+
+    from libinsdb import RemoteInsDb
+
+    # The instrument database is kept locally, so it was
+    # dumped from a running InstrumentDB instance
+    insdb = RemoteInsDb(
+        server_address="https://insdbdemo.fisica.unimi.it",
+        username="demo",
+        password="planckdbdemo",
+    )
+
+    data_file = insdb.query(
+        "/releases/planck2021/LFI/frequency_030_ghz/bandpass",
+    )
+
+    print(f'Going to read file "{data_file.name}" from the database…")
+    with data_file.open_data_file(insdb) as my_file:
+        contents = my_file.read()
+
+    # In the case of the Planck bandpasses, we know that they
+    # are saved using UTF-8 encoding.
+    print(contents.decode("utf-8"))
