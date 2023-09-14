@@ -12,7 +12,6 @@ requests = "^2.31.0"
 tomlkit = "^0.12.1"
 requests-mock = "^1.11.0"
 coverage = "^7.3.0"
-types-requests = "^2.31.0.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
@@ -20,6 +19,7 @@ flake8 = "^6.1.0"
 mypy = "^1.4"
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
+types-requests = "^2.31.0.2"
 
 [tool.poetry.group.docs]
 optional = true
