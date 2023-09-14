@@ -37,10 +37,3 @@ testpaths = [
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[gh]
-python =
-    3.11 = py311, type
-    3.10 = py310
-    3.9 = py39
-    3.8 = py38
