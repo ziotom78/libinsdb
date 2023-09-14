@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from abc import ABC, abstractmethod
-from typing import Any, Union
+from typing import Any, Union, IO
 from uuid import UUID
 
 
@@ -17,7 +17,7 @@ class InstrumentDatabase(ABC):
     for :class:`.RestfulConnection`
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._tracked_data_files = set()  # type: set[UUID]
 
     def add_uuid_to_tracked_list(self, uuid: UUID) -> None:
@@ -109,3 +109,12 @@ class InstrumentDatabase(ABC):
 
         # Assume that "identifier" is a release name
         return self.query_data_file(identifier)
+
+    @abstractmethod
+    def open_data_file(self, data_file: DataFile) -> IO:
+        """
+        Open the data file for reading
+
+        This is meant to be used as a context-manager.
+        """
+        raise NotImplementedError()

@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from datetime import datetime
-from typing import Any, Union
+from tempfile import TemporaryFile
+from typing import Any, Union, IO
 from urllib.parse import urljoin
 from uuid import UUID
 
@@ -128,6 +129,7 @@ class RemoteInsDb(InstrumentDatabase):
             upload_date=data_file_info["upload_date"],
             metadata=parsed_metadata,
             data_file_local_path=None,
+            data_file_download_url=data_file_info["download_link"],
             quantity=uuid_from_url(data_file_info["quantity"]),
             spec_version=data_file_info["spec_version"],
             dependencies=set(
@@ -190,3 +192,16 @@ class RemoteInsDb(InstrumentDatabase):
             comment=release_info["comment"],
             data_files=set([uuid_from_url(x) for x in release_info["data_files"]]),
         )
+
+    def open_data_file(self, data_file: DataFile) -> IO:
+        """This is meant to be used as a context-manager"""
+        assert data_file.data_file_download_url is not None
+
+        f = TemporaryFile("w+b")
+        response = requests.get(
+            str(data_file.data_file_download_url), allow_redirects=True
+        )
+        f.write(response.content)
+        f.seek(0)
+
+        return f

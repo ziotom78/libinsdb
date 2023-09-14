@@ -3,7 +3,7 @@
 from datetime import datetime
 import json
 from pathlib import Path
-from typing import Any, Union
+from typing import Any, Union, IO
 from uuid import UUID
 
 
@@ -84,7 +84,7 @@ def _parse_quantity(obj_dict: dict[str, Any]) -> Quantity:
     )
 
 
-def parse_data_file(obj_dict: dict[str, Any]) -> DataFile:
+def parse_data_file(storage_path: Path, obj_dict: dict[str, Any]) -> DataFile:
     dependencies = set()  # type: set[UUID]
     if "dependencies" in obj_dict:
         dependencies = set([UUID(x) for x in obj_dict["dependencies"]])
@@ -104,7 +104,10 @@ def parse_data_file(obj_dict: dict[str, Any]) -> DataFile:
         name=obj_dict.get("name", ""),
         upload_date=datetime.fromisoformat(obj_dict["upload_date"]),
         metadata=obj_dict.get("metadata", None),
-        data_file_local_path=file_name,
+        data_file_local_path=storage_path / file_name
+        if file_name is not None
+        else None,
+        data_file_download_url=None,
         quantity=UUID(obj_dict["quantity"]),
         spec_version=obj_dict.get("spec_version", ""),
         dependencies=dependencies,
@@ -160,10 +163,10 @@ class InstrumentDbFormatError(Exception):
 class LocalInsDb(InstrumentDatabase):
     """A class that interfaces with a flat-file representation of a database."""
 
-    def __init__(self, path: Union[str, Path]):
+    def __init__(self, storage_path: Union[str, Path]):
         super().__init__()
 
-        self.path = Path(path)
+        self.storage_path = Path(storage_path)
 
         self.format_specs = {}  # type: dict[UUID, FormatSpecification]
         self.entities = {}  # type: dict[UUID, Entity]
@@ -187,18 +190,18 @@ class LocalInsDb(InstrumentDatabase):
         obvious errors.
         """
 
-        schema_file_path = self.path / _DB_FLATFILE_SCHEMA_FILE_NAME
+        schema_file_path = self.storage_path / _DB_FLATFILE_SCHEMA_FILE_NAME
 
         if not schema_file_path.exists():
             raise InstrumentDbFormatError(
                 ("no valid schema file found " 'in "{path}"').format(
-                    path=self.path.absolute()
+                    path=self.storage_path.absolute()
                 )
             )
 
     def read_schema(self) -> None:
         "Read the JSON file containing the metadata"
-        schema_file = self.path / _DB_FLATFILE_SCHEMA_FILE_NAME
+        schema_file = self.storage_path / _DB_FLATFILE_SCHEMA_FILE_NAME
 
         with schema_file.open("rt") as inpf:
             schema = json.load(inpf)
@@ -221,7 +224,9 @@ class LocalInsDb(InstrumentDatabase):
 
         self.data_files = {}
         for obj_dict in schema.get("data_files", []):
-            cur_data_file = parse_data_file(obj_dict)
+            cur_data_file = parse_data_file(
+                storage_path=self.storage_path, obj_dict=obj_dict
+            )
             self.data_files[cur_data_file.uuid] = cur_data_file
 
         self.releases = {}
@@ -295,7 +300,7 @@ class LocalInsDb(InstrumentDatabase):
                 uuid = UUID(identifier)
 
                 if track:
-                    self.add_uuid_to_tracked_list(uuid=identifier)
+                    self.add_uuid_to_tracked_list(uuid=uuid)
 
                 return self.data_files[uuid]
             except ValueError:
@@ -349,3 +354,7 @@ class LocalInsDb(InstrumentDatabase):
 
     def query_release(self, tag: str) -> Release:
         return self.releases[tag]
+
+    def open_data_file(self, data_file: DataFile) -> IO:
+        assert data_file.data_file_local_path is not None
+        return data_file.data_file_local_path.open("rb")
