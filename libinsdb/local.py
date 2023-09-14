@@ -1,11 +1,14 @@
 # -*- encoding: utf-8 -*-
 
-from datetime import datetime
+# For PEP 604
+from __future__ import annotations
+
 import json
 from pathlib import Path
 from typing import Any, Union, IO
 from uuid import UUID
 
+from dateutil import parser
 
 from .objects import FormatSpecification, Entity, Quantity, DataFile, Release
 from .instrumentdb import InstrumentDatabase
@@ -102,7 +105,7 @@ def parse_data_file(storage_path: Path, obj_dict: dict[str, Any]) -> DataFile:
     return DataFile(
         uuid=UUID(obj_dict["uuid"]),
         name=obj_dict.get("name", ""),
-        upload_date=datetime.fromisoformat(obj_dict["upload_date"]),
+        upload_date=parser.isoparse(obj_dict["upload_date"]),
         metadata=obj_dict.get("metadata", None),
         data_file_local_path=storage_path / file_name
         if file_name is not None
@@ -121,7 +124,7 @@ def parse_data_file(storage_path: Path, obj_dict: dict[str, Any]) -> DataFile:
 def _parse_release(obj_dict: dict[str, Any]) -> Release:
     return Release(
         tag=obj_dict["tag"],
-        rel_date=datetime.fromisoformat(obj_dict["release_date"]),
+        rel_date=parser.isoparse(obj_dict["release_date"]),
         comment=obj_dict.get("comments", ""),
         data_files=set([UUID(x) for x in obj_dict.get("data_files", [])]),
     )

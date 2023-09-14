@@ -1,5 +1,8 @@
 # -*- encoding: utf-8 -*-
 
+# For PEP 604
+from __future__ import annotations
+
 from datetime import datetime
 from pathlib import Path
 from typing import Any

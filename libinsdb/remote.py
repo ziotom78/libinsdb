@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from datetime import datetime
 from tempfile import TemporaryFile
 from typing import Any, Union, IO
 from urllib.parse import urljoin
 from uuid import UUID
 
+from dateutil import parser
 
 import requests
 
@@ -188,7 +188,7 @@ class RemoteInsDb(InstrumentDatabase):
 
         return Release(
             tag=release_info["tag"],
-            rel_date=datetime.fromisoformat(release_info["rel_date"]),
+            rel_date=parser.isoparse(release_info["rel_date"]),
             comment=release_info["comment"],
             data_files=set([uuid_from_url(x) for x in release_info["data_files"]]),
         )
