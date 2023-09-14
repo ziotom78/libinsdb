@@ -13,9 +13,7 @@ build:
       - asdf plugin add poetry
       - asdf install poetry latest
       - asdf global poetry latest
-      - poetry export --without-hashes > requirements.txt
-    post_install:
-      - pip install -r requirements.txt
+      - poetry export --with=docs --without-hashes > docs/requirements.txt
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
