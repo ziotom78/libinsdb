@@ -449,6 +449,36 @@ def test_create_objects(requests_mock):
     )
 
     requests_mock.post(
+        "http://localhost/api/data_files/",
+        json={
+            "uuid": "102ae614-1895-4fac-805d-2662de22085c",
+            "url": "http://localhost/api/data_files/102ae614-1895-4fac-805d-2662de22085c/",
+            "name": "file",
+            "upload_date": "2023-10-07T20:42:03.824067Z",
+            "file_data": None,
+            "metadata": None,
+            "quantity": "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/",
+            "spec_version": "1.0",
+            "dependencies": [
+                "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
+            ],
+            "plot_mime_type": None,
+            "plot_file": None,
+            "comment": "",
+            "release_tags": [],
+            "download_link": "http://localhost/browse/data_files/102ae614-1895-4fac-805d-2662de22085c/download/",
+            "plot_download_link": "http://localhost/browse/data_files/102ae614-1895-4fac-805d-2662de22085c/plot/",
+        },
+    )
+    data_file_url = connection.create_data_file(
+        quantity="quantity", parent_path="root", dependencies=[data_file_url]
+    )
+    assert (
+        data_file_url
+        == "http://localhost/api/data_files/102ae614-1895-4fac-805d-2662de22085c/"
+    )
+
+    requests_mock.post(
         "http://localhost/api/releases/",
         json={
             "tag": "rel1.0",
