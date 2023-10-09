@@ -34,7 +34,7 @@ available at https://insdbdemo.fisica.unimi.it:
 
     from libinsdb import RemoteInsDb
 
-    # The instrument database is kept locally, so it was
+    # The instrument database is kept remotely, so it was
     # dumped from a running InstrumentDB instance
     insdb = RemoteInsDb(
         server_address="https://insdbdemo.fisica.unimi.it",
@@ -53,3 +53,11 @@ available at https://insdbdemo.fisica.unimi.it:
     # In the case of the Planck bandpasses, we know that they
     # are saved using UTF-8 encoding.
     print(contents.decode("utf-8"))
+
+
+
+Local vs remote databases
+-------------------------
+
+As shown in the two examples above, Libinsdb lets you to interface a local copy or a remote database running the full server. There is one important difference between the two cases: you can alter the content of the database only if you are accessing a remote copy, while a local copy is always read-only. The reason for this is that changes in the database are handled by the remote InstrumentDB server, which implements full validation checks for every change.
+

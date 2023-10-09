@@ -26,7 +26,7 @@ Once you have activate your virtual environment, you can install Libinsdb using 
 
     pip3 install libinsdb
 
-Refer to :ref:`Installation` for further details.
+Refer to :ref:`installation-label` for further details.
 
 Connecting to the database
 --------------------------
@@ -68,3 +68,48 @@ Remember that the file is always opened in binary mode; thus, if you know it is 
 
     decoded_contents = contents.decode("utf-8")
 
+
+Modifying the content of the database
+-------------------------------------
+
+If you are accessing a local copy of the database, only read-only operations are enabled. However, if you instantiate an object of type :class:`.RemoteInsDb`, then additional methods are available with respect to :class:`.LocalInsDb`:
+
+- :meth:`.RemoteInsDb.patch` lets you to change any object in the database, be it a specification document, a data file, a quantity, etc.
+- :meth:`.RemoteInsDb.delete` lets you to remove any object in the database.
+- :meth:`.RemoteInsDb.post` lets you to add a new object in the database.
+
+The most used operation is of course to add new objects to the database, which is the reason why :class:`.RemoteInsDb` provides a few additional high-level methods that wrap :meth:`.RemoteInsDb.post`:
+
+1. :meth:`.RemoteInsDb.create_format_spec` creates a new format specification;
+2. :meth:`.RemoteInsDb.create_entity` creates a new entity;
+3. :meth:`.RemoteInsDb.create_quantity` creates a new quantity;
+4. :meth:`.RemoteInsDb.create_data_file` creates a new data file;
+5. :meth:`.RemoteInsDb.create_release` creates a new release.
+
+Each of these high-level functions returns the URL of the new object and enables an easier syntax to specify where the new objects should be created::
+
+    # With .post(), you must know the URL of the parent entity and be
+    # sure to include the relevant keys in the dictionary
+    response = db.post(
+        url="http://localhost/api/quantities/",
+        data={
+            "name": "my_quantity",
+            "format_spec": format_spec_url,
+            "parent_entity": parent_entity_url,  # ←
+        },
+    )
+    quantity_url = response["url"]
+
+    # With .create_quantity, you just specify the path
+    # where to store the quantity
+    quantity_url = db.create_quantity(
+        name="my quantity",
+        parent_path="root/sub_entity1/sub_entity2",
+        format_spec_url=format_spec_url,
+    )
+
+
+A real-world case
+-----------------
+
+The website https://insdbdemo.fisica.unimi.it shows a demo of InstrumentDB hosting a reduced instrument model of the ESA Planck spacecraft. The code used to fill the database is available at https://github.com/ziotom78/planck_insdb_demo and can be used as a reference to use Libinsdb in a real-world scenario.
