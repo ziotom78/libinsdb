@@ -431,7 +431,7 @@ class RemoteInsDb(InstrumentDatabase):
         quantity: str,
         parent_path: str,
         data_file_path: Path | None = None,
-        data_file_name: str = None,
+        data_file_name: str | None = None,
         plot_file_path: Path | None = None,
         plot_file: BufferedReader | None = None,
         plot_file_name: str | None = None,
