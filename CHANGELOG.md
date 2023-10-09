@@ -1,5 +1,7 @@
 # HEAD
 
+-   Support dependencies in `RemoteInsDb.create_data_file` [#3](https://github.com/ziotom78/libinsdb/pull/3)
+
 # Version 0.2.0
 
 -   Add methods to `RemoteInsDb` to add/modify/delete objects in a remote database [#2](https://github.com/ziotom78/libinsdb/pull/2)
