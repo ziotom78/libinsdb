@@ -164,7 +164,11 @@ class InstrumentDbFormatError(Exception):
 
 
 class LocalInsDb(InstrumentDatabase):
-    """A class that interfaces with a flat-file representation of a database."""
+    """A class that interfaces with a flat-file representation of a database.
+
+    This class assumes that the storage is read-only: no change in the files
+    is ever done!
+    """
 
     def __init__(self, storage_path: Union[str, Path]):
         super().__init__()
