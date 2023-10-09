@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.3.0
+
 -   Support dependencies in `RemoteInsDb.create_data_file` [#3](https://github.com/ziotom78/libinsdb/pull/3)
 
 # Version 0.2.0
