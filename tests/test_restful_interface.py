@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 import datetime
+import io
 from uuid import UUID
-
 from libinsdb import Entity, Quantity, DataFile, Release, RemoteInsDb
 
 
@@ -327,3 +327,143 @@ def test_download_file(requests_mock):
     data_file = connection.query_data_file(uuid)
     with data_file.open_data_file(connection) as f:
         assert f.read(11) == b",wavenumber"
+
+
+def test_create_objects(requests_mock):
+    connection = configure_connection(requests_mock)
+
+    entity_response = {
+        "uuid": "5a25b116-784e-4013-8f60-2f31b4190ec3",
+        "url": "http://localhost/api/entities/5a25b116-784e-4013-8f60-2f31b4190ec3/",
+        "name": "root",
+        "parent": None,
+        "children": [],
+        "quantities": [],
+    }
+    requests_mock.post(
+        "http://localhost/api/entities/",
+        json=entity_response,
+    )
+    root_entity = connection.create_entity(name="root")
+    assert (
+        root_entity
+        == "http://localhost/api/entities/5a25b116-784e-4013-8f60-2f31b4190ec3/"
+    )
+
+    requests_mock.get(
+        "http://localhost/tree/root/",
+        json=entity_response,
+    )
+    requests_mock.post(
+        "http://localhost/api/entities/",
+        json={
+            "uuid": "44fc0e18-fbeb-4387-953c-68bfd11900e1",
+            "url": "http://localhost/api/entities/44fc0e18-fbeb-4387-953c-68bfd11900e1/",
+            "name": "root",
+            "parent": "http://localhost/api/entities/5a25b116-784e-4013-8f60-2f31b4190ec3/",
+            "children": [],
+            "quantities": [],
+        },
+    )
+    sub_root_entity = connection.create_entity(name="sub_root", parent_path="root")
+    assert (
+        sub_root_entity
+        == "http://localhost/api/entities/44fc0e18-fbeb-4387-953c-68bfd11900e1/"
+    )
+
+    requests_mock.post(
+        "http://localhost/api/format_specs/",
+        json={
+            "uuid": "b19580f1-32dd-4a37-8366-97633324199e",
+            "url": "http://localhost/api/format_specs/b19580f1-32dd-4a37-8366-97633324199e/",
+            "document_ref": "REF01",
+            "title": "Reference Document",
+            "doc_file": "http://localhost/format_spec/b19580f1-32dd-4a37-8366-97633324199e_ref01.txt",
+            "doc_file_name": "ref01.txt",
+            "doc_mime_type": "text/plain",
+            "file_mime_type": "text/csv",
+            "download_link": "http://localhost/browse/format_specs/b19580f1-32dd-4a37-8366-97633324199e/download/",
+        },
+    )
+    format_spec_url = connection.create_format_spec(
+        document_ref="ref01",
+        document_title="Reference document",
+        document_file=io.StringIO("Test doc"),
+        document_file_name="ref01.txt",
+        document_mime_type="text/plain",
+        file_mime_type="text/csv",
+    )
+    assert (
+        format_spec_url
+        == "http://localhost/api/format_specs/b19580f1-32dd-4a37-8366-97633324199e/"
+    )
+
+    quantity_response = {
+        "uuid": "01e9f145-0db9-4913-8a72-d7a2d58b4341",
+        "url": "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/",
+        "name": "quantity",
+        "format_spec": "http://localhost/api/format_specs/b19580f1-32dd-4a37-8366-97633324199e/",
+        "parent_entity": "http://localhost/api/entities/44fc0e18-fbeb-4387-953c-68bfd11900e1/",
+        "data_files": [],
+    }
+    requests_mock.post(
+        "http://localhost/api/quantities/",
+        json=quantity_response,
+    )
+    quantity_url = connection.create_quantity(
+        name="quantity", parent_path="root", format_spec_url=format_spec_url
+    )
+    assert (
+        quantity_url
+        == "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/"
+    )
+
+    requests_mock.get(
+        "http://localhost/tree/root/quantity/",
+        json=quantity_response,
+    )
+    requests_mock.post(
+        "http://localhost/api/data_files/",
+        json={
+            "uuid": "8db2fc11-1d28-44b2-9461-8c70c578dd6f",
+            "url": "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/",
+            "name": "file",
+            "upload_date": "2023-10-07T20:42:03.824067Z",
+            "file_data": None,
+            "metadata": None,
+            "quantity": "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/",
+            "spec_version": "1.0",
+            "dependencies": [],
+            "plot_mime_type": None,
+            "plot_file": None,
+            "comment": "",
+            "release_tags": [],
+            "download_link": "http://localhost/browse/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/download/",
+            "plot_download_link": "http://localhost/browse/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/plot/",
+        },
+    )
+    data_file_url = connection.create_data_file(quantity="quantity", parent_path="root")
+    assert (
+        data_file_url
+        == "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
+    )
+
+    requests_mock.post(
+        "http://localhost/api/releases/",
+        json={
+            "tag": "rel1.0",
+            "url": "http://localhost/api/releases/rel1.0/",
+            "rel_date": "2023-10-08T05:56:43.503576Z",
+            "comment": "",
+            "release_document": None,
+            "release_document_mime_type": "text/plain",
+            "data_files": [
+                "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
+            ],
+            "json_dump": "http://localhost/browse/releases/rel1.0/download/",
+        },
+    )
+    release_url = connection.create_release(
+        release_tag="rel1.0", data_file_url_list=[data_file_url]
+    )
+    assert release_url == "http://localhost/api/releases/rel1.0/"
