@@ -109,6 +109,44 @@ Each of these high-level functions returns the URL of the new object and enables
     )
 
 
+These instructions can be combined in a script so that a full tree of entities/quantities can be produced::
+
+    connection = RemoteInsDb(
+        server_address="http://localhost:8000",
+        username="tomasi",
+        password="z5i6o2t3o8m3",
+    )
+
+    # The tree structure is the following:
+    # / root             with quantity "my_quantity" and one data file
+    #   / sub_root
+    #
+
+    root_entity = connection.create_entity(name="root")
+    sub_root_entity = connection.create_entity(name="sub_root", parent_path="root")
+    format_spec_url = connection.create_format_spec(
+        document_ref="ref01",
+        document_title="Reference document",
+        document_file=io.StringIO("Test doc"),
+        document_file_name="ref01.txt",
+        document_mime_type="text/plain",
+        file_mime_type="text/csv",
+    )
+    quantity_url = connection.create_quantity(
+        name="my_quantity", parent_path="root", format_spec_url=format_spec_url
+    )
+
+    data_file_url = connection.create_data_file(
+        quantity="my_quantity",
+        parent_path="root",
+        data_file_path="/local_storage/my_data_file.csv",
+    )
+
+    release_url = connection.create_release(
+        release_tag="rel1.0", data_file_url_list=[data_file_url]
+    )
+
+
 A real-world case
 -----------------
 

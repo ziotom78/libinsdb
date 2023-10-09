@@ -440,6 +440,7 @@ class RemoteInsDb(InstrumentDatabase):
         spec_version: str = "1.0",
         metadata: Any = None,
         comment: str = "",
+        dependencies: list[str] | None = None,
     ) -> str:
         """Add a new data file to the database.
 
@@ -482,6 +483,9 @@ class RemoteInsDb(InstrumentDatabase):
                 data["metadata"] = metadata
             else:
                 data["metadata"] = json.dumps(metadata)
+
+        if dependencies:
+            data["dependencies"] = dependencies
 
         files = {}
 
