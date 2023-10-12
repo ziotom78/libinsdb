@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Any, Union, IO
@@ -27,11 +28,13 @@ class InstrumentDatabase(ABC):
         return self._tracked_data_files
 
     @abstractmethod
-    def query_entity(self, identifier: UUID) -> Entity:
+    def query_entity(self, identifier: UUID | str) -> Entity:
+        "Return a :class:`Entity` object from either its UUID or path"
         raise NotImplementedError()
 
     @abstractmethod
-    def query_quantity(self, identifier: UUID) -> Quantity:
+    def query_quantity(self, identifier: UUID | str) -> Quantity:
+        "Return a :class:`Quantity` object from either its UUID or path"
         raise NotImplementedError()
 
     @abstractmethod

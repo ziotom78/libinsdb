@@ -27,8 +27,14 @@ def check_all_objects_in_db(insdb: InstrumentDatabase) -> None:
     entity = insdb.query_entity(uuid)
     check_entity(entity=entity, uuid=uuid)
 
+    entity = insdb.query_entity("/LFI/frequency_030_ghz/27M")
+    check_entity(entity=entity, uuid=uuid)
+
     uuid = UUID("6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53")
     quantity = insdb.query_quantity(uuid)
+    check_quantity(quantity=quantity, uuid=uuid)
+
+    quantity = insdb.query_quantity("/LFI/frequency_030_ghz/27M/bandpass")
     check_quantity(quantity=quantity, uuid=uuid)
 
     uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
@@ -60,6 +66,36 @@ def test_remotely(requests_mock):
     configure_mock_entity(requests_mock)
     configure_mock_quantity(requests_mock)
     configure_mock_data_file(requests_mock)
+
+    requests_mock.get(
+        "http://localhost/tree/LFI/frequency_030_ghz/27M",
+        json={
+            "uuid": "8734a013-4184-412c-ab5a-963388beae34",
+            "url": "http://localhost/api/entities/8734a013-4184-412c-ab5a-963388beae34/",
+            "name": "27M",
+            "parent": "http://localhost/api/entities/b3386894-40a3-4664-aaf6-f78d944943e2/",
+            "children": [],
+            "quantities": [
+                "http://localhost/api/quantities/6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53/",
+            ],
+        },
+    )
+
+    requests_mock.get(
+        "http://localhost/tree/LFI/frequency_030_ghz/27M/bandpass",
+        json={
+            "uuid": "6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53",
+            "url": "http://localhost/api/quantities/6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53/",
+            "name": "bandpass",
+            "format_spec": "http://localhost/api/format_specs/e406caf2-95c0-4e18-8980-a86934479423/",
+            "parent_entity": "http://localhost/api/entities/8734a013-4184-412c-ab5a-963388beae34/",
+            "data_files": [
+                "http://localhost/api/data_files/7a6dc092-c17a-41c2-aa96-b6ed1f483e1b/",
+                "http://localhost/api/data_files/c7f9dd23-873b-4a8d-b97c-9289df749e7c/",
+                "http://localhost/api/data_files/3289825e-628c-427a-a75f-f8369c5b4d9b/",
+            ],
+        },
+    )
 
     requests_mock.get(
         "http://localhost/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass/",
