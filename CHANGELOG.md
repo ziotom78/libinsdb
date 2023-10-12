@@ -1,5 +1,7 @@
 # HEAD
 
+-   Fix flake8 warnings and MyPy type errors [#5](https://github.com/ziotom78/libinsdb/pull/5)
+
 # Version 0.4.0
 
 -   Support paths for `.query_entity()` and `.query_quantity()` [#4](https://github.com/ziotom78/libinsdb/pull/4)
