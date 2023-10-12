@@ -120,21 +120,36 @@ class RemoteInsDb(InstrumentDatabase):
         if response.status_code != expected_http_code:
             raise InstrumentDbConnectionError(response, message="Unable to log in")
 
-    def query_entity(self, identifier: UUID) -> Entity:
-        response = requests.get(
-            urljoin(self.server_address, f"/api/entities/{identifier}/"),
-            headers=self.auth_header,
-        )
-        self._validate_response(response)
-        entity_info = response.json()
+    def query_entity(self, identifier: UUID | str) -> Entity:
+        try:
+            if isinstance(identifier, str):
+                uuid = UUID(identifier)
+            else:
+                uuid = identifier
 
-        return Entity(
-            uuid=identifier,
-            name=entity_info["name"],
-            full_path=None,
-            parent=uuid_from_url(entity_info["parent"]),
-            quantities=set([uuid_from_url(x) for x in entity_info["quantities"]]),
-        )
+            response = requests.get(
+                urljoin(self.server_address, f"/api/entities/{uuid}/"),
+                headers=self.auth_header,
+            )
+            self._validate_response(response)
+            entity_info = response.json()
+
+            return Entity(
+                uuid=identifier,
+                name=entity_info["name"],
+                full_path=None,
+                parent=uuid_from_url(entity_info["parent"]),
+                quantities=set([uuid_from_url(x) for x in entity_info["quantities"]]),
+            )
+        except ValueError:
+            # `identifier` is not a UUID, so it's probably a path
+            identifier = str(identifier).removeprefix("/").removesuffix("/")
+            response = requests.get(
+                urljoin(self.server_address, f"/tree/{identifier}"),
+                headers=self.auth_header,
+            )
+            self._validate_response(response)
+            return self.query_entity(UUID(response.json()["uuid"]))
 
     def query_format_spec(self, identifier: UUID) -> FormatSpecification:
         response = requests.get(
@@ -153,21 +168,36 @@ class RemoteInsDb(InstrumentDatabase):
             file_mime_type=format_spec_info["file_mime_type"],
         )
 
-    def query_quantity(self, identifier: UUID) -> Quantity:
-        response = requests.get(
-            urljoin(self.server_address, f"/api/quantities/{identifier}/"),
-            headers=self.auth_header,
-        )
-        self._validate_response(response)
-        quantity_info = response.json()
+    def query_quantity(self, identifier: UUID | str) -> Quantity:
+        try:
+            if isinstance(identifier, str):
+                uuid = UUID(identifier)
+            else:
+                uuid = identifier
 
-        return Quantity(
-            uuid=identifier,
-            name=quantity_info["name"],
-            format_spec=uuid_from_url(quantity_info["format_spec"]),
-            entity=uuid_from_url(quantity_info["parent_entity"]),
-            data_files=set([uuid_from_url(x) for x in quantity_info["data_files"]]),
-        )
+            response = requests.get(
+                urljoin(self.server_address, f"/api/quantities/{identifier}/"),
+                headers=self.auth_header,
+            )
+            self._validate_response(response)
+            quantity_info = response.json()
+
+            return Quantity(
+                uuid=identifier,
+                name=quantity_info["name"],
+                format_spec=uuid_from_url(quantity_info["format_spec"]),
+                entity=uuid_from_url(quantity_info["parent_entity"]),
+                data_files=set([uuid_from_url(x) for x in quantity_info["data_files"]]),
+            )
+        except ValueError:
+            # `identifier` is not a UUID, so it's probably a path
+            identifier = str(identifier).removeprefix("/").removesuffix("/")
+            response = requests.get(
+                urljoin(self.server_address, f"/tree/{identifier}"),
+                headers=self.auth_header,
+            )
+            self._validate_response(response)
+            return self.query_quantity(UUID(response.json()["uuid"]))
 
     def _create_data_file_from_response(self, response: requests.Response) -> DataFile:
         data_file_info = response.json()

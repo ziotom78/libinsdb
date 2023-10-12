@@ -275,14 +275,35 @@ class LocalInsDb(InstrumentDatabase):
         entity = self.entities[quantity.entity]
         return f"{entity.full_path}/{quantity.name}"
 
-    def query_entity(self, identifier: UUID) -> Entity:
-        return self.entities[identifier]
+    def query_entity(self, identifier: UUID | str) -> Entity:
+        if isinstance(identifier, UUID):
+            return self.entities[identifier]
+        else:
+            # `identifier` contains a path
+            entity_uuid = self.path_to_entity[identifier]
+            return self.entities[entity_uuid]
 
     def query_format_spec(self, identifier: UUID) -> FormatSpecification:
         return self.format_specs[identifier]
 
-    def query_quantity(self, identifier: UUID) -> Quantity:
-        return self.quantities[identifier]
+    def query_quantity(self, identifier: UUID | str) -> Quantity:
+        if isinstance(identifier, UUID):
+            return self.quantities[identifier]
+        else:
+            path_components = identifier.split("/")
+            entity_path = "/".join(path_components[:-1])
+            quantity_name = path_components[-1]
+
+            entity_uuid = self.path_to_entity[entity_path]
+            entity = self.entities[entity_uuid]
+            for cur_quantity_uuid in entity.quantities:
+                cur_quantity = self.quantities[cur_quantity_uuid]
+                if cur_quantity.name == quantity_name:
+                    return cur_quantity
+
+            raise KeyError(
+                f'quantity "{quantity_name}" not found for entity "{entity_path}"'
+            )
 
     def query_data_file(self, identifier: str | UUID, track: bool = True) -> DataFile:
         """Retrieve a data file
