@@ -135,7 +135,7 @@ class RemoteInsDb(InstrumentDatabase):
             entity_info = response.json()
 
             return Entity(
-                uuid=identifier,
+                uuid=uuid,
                 name=entity_info["name"],
                 full_path=None,
                 parent=uuid_from_url(entity_info["parent"]),
@@ -176,14 +176,14 @@ class RemoteInsDb(InstrumentDatabase):
                 uuid = identifier
 
             response = requests.get(
-                urljoin(self.server_address, f"/api/quantities/{identifier}/"),
+                urljoin(self.server_address, f"/api/quantities/{uuid}/"),
                 headers=self.auth_header,
             )
             self._validate_response(response)
             quantity_info = response.json()
 
             return Quantity(
-                uuid=identifier,
+                uuid=uuid,
                 name=quantity_info["name"],
                 format_spec=uuid_from_url(quantity_info["format_spec"]),
                 entity=uuid_from_url(quantity_info["parent_entity"]),
