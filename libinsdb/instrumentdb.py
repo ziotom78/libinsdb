@@ -2,11 +2,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Union, IO
+from typing import Union, IO
 from uuid import UUID
 
 
-import requests
 
 from .objects import FormatSpecification, Entity, Quantity, DataFile, Release
 
