@@ -12,7 +12,7 @@ Here is an example showing how to access a local instance of an instrument datab
 
     from libinsdb import LocalInsDb
 
-    # The instrument database is kept locally, so it was
+    # The instrument database is kept locally: it was
     # dumped from a running InstrumentDB instance
     insdb = LocalInsDb(
         storage_path="/opt/my_database_dump",
@@ -34,8 +34,8 @@ available at https://insdbdemo.fisica.unimi.it:
 
     from libinsdb import RemoteInsDb
 
-    # The instrument database is kept remotely, so it was
-    # dumped from a running InstrumentDB instance
+    # The instrument database is kept remotely, so we need
+    # a username and a password to access it.
     insdb = RemoteInsDb(
         server_address="https://insdbdemo.fisica.unimi.it",
         username="demo",

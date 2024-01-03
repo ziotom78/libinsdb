@@ -244,7 +244,12 @@ class LocalInsDb(InstrumentDatabase):
             )
 
     def read_schema(self) -> None:
-        "Read the JSON file containing the metadata"
+        """Read the JSON file containing the metadata
+
+        The schema file can be kept either in JSON or YAML format. If the
+        schema file is compressed using GZip, this method will decompress
+        it on the fly before parsing its contents.
+        """
 
         schema = None
         for cur_ext, cur_parser in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
