@@ -127,3 +127,14 @@ def test_schema_formats():
 
         # Check that the parent is the "frequency_030_ghz" entity
         assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")
+
+
+def test_merge():
+    db = load_mock_database()
+    db.merge(LocalInsDb(Path(__file__).parent / "mock_db_json_2"))
+
+    # This UUID is present in the *first* database
+    assert db.query_entity(UUID("8734a013-4184-412c-ab5a-963388beae34"))
+
+    # This UUID is present in the *second* database
+    assert db.query_entity(UUID("79673fad-adcf-471a-969f-cb0d4a85bd30"))

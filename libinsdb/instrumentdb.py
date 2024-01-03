@@ -5,8 +5,6 @@ from abc import ABC, abstractmethod
 from typing import Union, IO
 from uuid import UUID
 
-
-
 from .objects import FormatSpecification, Entity, Quantity, DataFile, Release
 
 

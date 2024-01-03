@@ -441,3 +441,14 @@ class LocalInsDb(InstrumentDatabase):
     def open_data_file(self, data_file: DataFile) -> IO:
         assert data_file.data_file_local_path is not None
         return data_file.data_file_local_path.open("rb")
+
+    def merge(self, other: "LocalInsDb") -> None:
+        """Merge another :class:`.LocalInsDb` object into this one"""
+
+        self.format_specs = {**self.format_specs, **other.format_specs}
+        self.entities = {**self.entities, **other.entities}
+        self.quantities = {**self.quantities, **other.quantities}
+        self.data_files = {**self.data_files, **other.data_files}
+        self.releases = {**self.releases, **other.releases}
+        self.path_to_entity = {**self.path_to_entity, **other.path_to_entity}
+        self.path_to_quantity = {**self.path_to_quantity, **other.path_to_quantity}
