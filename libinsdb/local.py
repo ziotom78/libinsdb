@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import json
+import yaml
+import gzip
 from pathlib import Path
 from typing import Any, Union, IO
 from uuid import UUID
@@ -13,7 +15,34 @@ from dateutil import parser
 from .objects import FormatSpecification, Entity, Quantity, DataFile, Release
 from .instrumentdb import InstrumentDatabase
 
-_DB_FLATFILE_SCHEMA_FILE_NAME = "schema.json"
+
+def _read_json(path: Path):
+    with path.open("rt") as inpf:
+        return json.load(inpf)
+
+
+def _read_json_gz(path: Path):
+    with gzip.open(path, "rt") as inpf:
+        return json.load(inpf)
+
+
+def _read_yaml(path: Path):
+    with path.open("rt") as inpf:
+        return yaml.safe_load(inpf)
+
+
+def _read_yaml_gz(path: Path):
+    with gzip.open(path, "rt") as inpf:
+        return yaml.safe_load(inpf)
+
+
+_DB_FLATFILE_SCHEMA_FILE_NAME = "schema"
+_DB_FLATFILE_SCHEMA_FILE_EXTENSIONS = [
+    (".json", _read_json),
+    (".json.gz", _read_json_gz),
+    (".yaml", _read_yaml),
+    (".yaml.gz", _read_yaml_gz),
+]
 _DB_FLATFILE_DATA_FILES_DIR_NAME = "data_files"
 _DB_FLATFILE_FORMAT_SPEC_DIR_NAME = "format_spec"
 _DB_FLATFILE_PLOT_FILES_DIR_NAME = "plot_files"
@@ -197,9 +226,17 @@ class LocalInsDb(InstrumentDatabase):
         obvious errors.
         """
 
-        schema_file_path = self.storage_path / _DB_FLATFILE_SCHEMA_FILE_NAME
+        found = False
 
-        if not schema_file_path.exists():
+        for cur_ext, _ in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
+            schema_file_path = self.storage_path / (
+                _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
+            )
+            if schema_file_path.exists():
+                found = True
+                break
+
+        if not found:
             raise InstrumentDbFormatError(
                 ("no valid schema file found " 'in "{path}"').format(
                     path=self.storage_path.absolute()
@@ -207,11 +244,29 @@ class LocalInsDb(InstrumentDatabase):
             )
 
     def read_schema(self) -> None:
-        "Read the JSON file containing the metadata"
-        schema_file = self.storage_path / _DB_FLATFILE_SCHEMA_FILE_NAME
+        """Read the JSON file containing the metadata
 
-        with schema_file.open("rt") as inpf:
-            schema = json.load(inpf)
+        The schema file can be kept either in JSON or YAML format. If the
+        schema file is compressed using GZip, this method will decompress
+        it on the fly before parsing its contents.
+        """
+
+        schema = None
+        for cur_ext, cur_parser in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
+            schema_file_path = self.storage_path / (
+                _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
+            )
+            try:
+                schema = cur_parser(schema_file_path)
+            except FileNotFoundError:
+                continue
+
+        if not schema:
+            raise InstrumentDbFormatError(
+                ("no valid schema file found " 'in "{path}"').format(
+                    path=self.storage_path.absolute()
+                )
+            )
 
         self.parse_schema(schema)
 

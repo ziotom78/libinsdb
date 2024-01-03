@@ -1,5 +1,7 @@
 # HEAD
 
+-   Support schema.json.gz, schema.yaml, schema.yaml.gz files [#6](https://github.com/ziotom78/libinsdb/pull/6)
+
 -   Fix flake8 warnings and MyPy type errors [#5](https://github.com/ziotom78/libinsdb/pull/5)
 
 # Version 0.4.0

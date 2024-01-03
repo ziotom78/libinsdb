@@ -10,7 +10,7 @@ from libinsdb import LocalInsDb, Entity, Quantity, DataFile
 
 def load_mock_database():
     curpath = Path(__file__).parent
-    return LocalInsDb(storage_path=curpath / "mock_db")
+    return LocalInsDb(storage_path=curpath / "mock_db_json")
 
 
 def test_key_errors():
@@ -109,3 +109,21 @@ def test_entry_hierarchy():
 
     # Check that the parent is the "frequency_030_ghz" entity
     assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")
+
+
+def test_schema_formats():
+    for folder_name in [
+        "mock_db_json",
+        "mock_db_json_gz",
+        "mock_db_yaml",
+        "mock_db_yaml_gz",
+    ]:
+        mock_db_path = Path(__file__).parent / folder_name
+        db = LocalInsDb(storage_path=mock_db_path)
+
+        # This is the "27M" entity
+        uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
+        child_entity = db.query_entity(uuid)
+
+        # Check that the parent is the "frequency_030_ghz" entity
+        assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")

@@ -13,6 +13,8 @@ tomlkit = "^0.12.1"
 requests-mock = "^1.11.0"
 coverage = "^7.3.0"
 python-dateutil = "^2.8.2"
+pyyaml = "^6.0.1"
+types-pyyaml = "^6.0.12.12"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
