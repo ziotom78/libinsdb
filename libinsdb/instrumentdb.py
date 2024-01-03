@@ -118,14 +118,3 @@ class InstrumentDatabase(ABC):
         This is meant to be used as a context-manager.
         """
         raise NotImplementedError()
-
-    def merge(self, other: "InstrumentDatabase") -> None:
-        """Merge another :class:`.InstrumentDatabase` object into this one"""
-
-        self.format_specs = {**self.format_specs, **other.format_specs}
-        self.entities = {**self.entities, **other.entities}
-        self.quantities = {**self.quantities, **other.quantities}
-        self.data_files = {**self.data_files, **other.data_files}
-        self.releases = {**self.releases, **other.releases}
-        self.path_to_entity = {**self.path_to_entity, **other.path_to_entity}
-        self.path_to_quantity = {**self.path_to_quantity, **other.path_to_quantity}

@@ -1,0 +1,14 @@
+{
+  "instrumentdb": {
+    "git_sha": "2df5be221f7408d5bf95a90f803735c9c9fbcace",
+    "version": "1.1.0",
+    "dump_date": "2023-08-24T08:07:18.338947+00:00",
+    "repository": "https://github.com/ziotom78/instrumentdb"
+  },
+  "entities": [
+    {
+      "uuid": "79673fad-adcf-471a-969f-cb0d4a85bd30",
+      "name": "additional_entity"
+    }
+  ]
+}
