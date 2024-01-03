@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.6.0
+
 -   Add `LocalInsDb.merge()` method to merge two databases [#7](https://github.com/ziotom78/libinsdb/pull/7)
 
 # Version 0.5.0
