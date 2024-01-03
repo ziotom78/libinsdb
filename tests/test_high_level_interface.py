@@ -53,7 +53,7 @@ def check_all_objects_in_db(insdb: InstrumentDatabase) -> None:
 
 def create_local_db() -> InstrumentDatabase:
     cur_path = Path(__file__).parent
-    return LocalInsDb(storage_path=cur_path / "mock_db")
+    return LocalInsDb(storage_path=cur_path / "mock_db_json")
 
 
 def test_locally():

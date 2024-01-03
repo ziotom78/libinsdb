@@ -1,0 +1,1227 @@
+---
+instrumentdb:
+  git_sha: 2df5be221f7408d5bf95a90f803735c9c9fbcace
+  version: 1.1.0
+  dump_date: '2023-08-24T08:07:18.338947+00:00'
+  repository: https://github.com/ziotom78/instrumentdb
+entities:
+- uuid: 564faff1-ef68-4e40-a2d1-9adb8d00d5c1
+  name: payload
+- uuid: ff5c3ca2-6789-415e-ae4e-eb68d086baa4
+  name: LFI
+  children:
+  - uuid: 023e6551-8126-48bb-a7db-fdb954592226
+    name: cryo_harness
+  - uuid: b3386894-40a3-4664-aaf6-f78d944943e2
+    name: frequency_030_ghz
+    children:
+    - uuid: 8734a013-4184-412c-ab5a-963388beae34
+      name: 27M
+    - uuid: c98e2217-e589-4b24-b0a7-fc81e171e10d
+      name: 27S
+    - uuid: 377573a4-92bf-418b-9c90-d8fccb89cd31
+      name: 28M
+    - uuid: cdbd2118-86e2-4828-a71f-89ee871bbd0f
+      name: 28S
+  - uuid: 2b7a4029-1b3d-404f-b9d1-87f6dcff77c6
+    name: frequency_044_ghz
+    children:
+    - uuid: 9b244fb3-e510-46d2-9595-1bd4069ea781
+      name: 24M
+    - uuid: 4494d482-13dc-41fd-947b-d6cfdcb9d309
+      name: 24S
+    - uuid: '08b6ed2f-bd84-4618-b6ca-5e4368c2bc85'
+      name: 25M
+    - uuid: fa4cdbb9-8423-4ff6-a16c-4ea8daba97c6
+      name: 25S
+    - uuid: 31318e7c-2c22-47fd-b840-39d1b60d7fa8
+      name: 26M
+    - uuid: 26e79830-50f0-49a2-9f84-867705ff0bad
+      name: 26S
+  - uuid: 4303ec99-bb2c-46f4-9120-b10885cd3935
+    name: frequency_070_ghz
+    children:
+    - uuid: 143fd54f-ab92-47d1-b1b9-78895343c27a
+      name: 18M
+    - uuid: dba6e626-0cc3-4cb3-87e6-f4d1a6b35030
+      name: 18S
+    - uuid: 1b9e18ea-07e1-43a6-a646-99b3c2030ce4
+      name: 19M
+    - uuid: 4ba33c4b-362e-49b2-aa02-5fb4a4cc8608
+      name: 19S
+    - uuid: 81ae2e54-449f-41b8-ba09-8269816fe0dc
+      name: 20M
+    - uuid: db33f958-d1bc-457f-9340-498df578aa4f
+      name: 20S
+    - uuid: '09df4473-fb18-48f5-9994-9e5a76b6658e'
+      name: 21M
+    - uuid: 9ed11837-dedd-468e-b404-dae6bba0beb7
+      name: 21S
+    - uuid: 51828fc8-fd43-4aef-ad51-5bfd50013e46
+      name: 22M
+    - uuid: 192c25e2-886a-4d25-84bd-16c510771267
+      name: 22S
+    - uuid: c02266f3-a219-4c7c-a1d0-e22d07db7a3d
+      name: 23M
+    - uuid: 7bd97cb7-d823-4140-8a5d-94db52839cbf
+      name: 23S
+- uuid: ff2a87bd-9a64-4ab5-9456-d5ffeae9ea23
+  name: HFI
+  children:
+  - uuid: 24a94d36-d114-48a0-ae0c-b7251bfcf239
+    name: frequency_100_ghz
+    children:
+    - uuid: 93609272-0812-4a1f-9c0d-99ceb04fe048
+      name: 1-a
+    - uuid: e754bbb1-545a-46b1-a2e8-a2062bd5836b
+      name: 1-b
+    - uuid: 84715e56-133b-4488-9eca-49359fb4d889
+      name: 2-a
+    - uuid: 59ae28e2-b8d5-4e9d-be8c-6a1c8eac462d
+      name: 2-b
+    - uuid: cae7d2ed-b6cd-4648-bb3d-cc140cf6267e
+      name: 3-a
+    - uuid: 364a3324-e373-40de-a0be-7d7e086740d3
+      name: 3-b
+    - uuid: 8df25e57-bba4-442a-976b-0846ff6146b8
+      name: 4-a
+    - uuid: 87b5a2a2-a6bd-4845-9bb5-d954af005d65
+      name: 4-b
+  - uuid: a619e104-35ff-48e4-8408-a0e22af05303
+    name: frequency_143_ghz
+    children:
+    - uuid: e0d75c53-ff6a-4d6b-8bb3-a46cc939df70
+      name: 1-a
+    - uuid: 494895af-2cf4-4e87-81fe-f5f646db1411
+      name: 1-b
+    - uuid: 7ad49fe8-c742-4bf0-b221-eaa932d7f516
+      name: 2-a
+    - uuid: 38341d64-16d0-4251-af84-d3d3ab5b8a9f
+      name: 2-b
+    - uuid: 1f138214-7cfb-4801-bd51-779ece97b5ab
+      name: 3-a
+    - uuid: 36c6d793-5823-4542-afcb-2468f434162b
+      name: 3-b
+    - uuid: 8a615527-9304-4b85-9b8c-fd80a6831552
+      name: 4-a
+    - uuid: 9220c3ee-205b-4cc6-81d5-3d91b96b9ff3
+      name: 4-b
+  - uuid: a010e190-4db0-458b-a50e-12315c611c93
+    name: frequency_217_ghz
+    children:
+    - uuid: 1f755446-be00-4cca-8133-baa38468bed4
+      name: '1'
+    - uuid: 40e3b602-2eb0-4c7e-8ef9-0e9ce2a6b5d7
+      name: '2'
+    - uuid: 73106350-c2c7-43c5-924c-6404dcab8481
+      name: '3'
+    - uuid: '068aeb17-6a7b-487d-a74a-f37102e58577'
+      name: '4'
+  - uuid: c703cb6f-398c-4b0d-ad98-6452ea01c19c
+    name: frequency_353_ghz
+    children:
+    - uuid: 2d9861a0-14b3-41cf-ab71-d7201421b7d8
+      name: '1'
+    - uuid: fd80c307-c131-4edd-8718-cde8c2cd6b5c
+      name: '2'
+    - uuid: 8aecb988-64a1-463e-8603-e45bcec64d51
+      name: '7'
+    - uuid: 472b9e92-02be-47a4-9c3d-c52259693396
+      name: '8'
+    - uuid: 47dbec12-12c0-4aa2-be22-1e17d7c32765
+      name: 3-a
+    - uuid: dee784c4-3310-4eec-8c00-92da8f290fef
+      name: 3-b
+    - uuid: 58dcf697-1dd0-4845-bc10-8ffd00e160f9
+      name: 4-a
+    - uuid: 5d8e0271-75f7-44be-852c-4a83ea622c4b
+      name: 4-b
+    - uuid: 01a77d62-bbd7-449b-8896-dc6bb898212c
+      name: 5-a
+    - uuid: dda366ba-50ed-47ec-ac76-44e1f69fd312
+      name: 5-b
+    - uuid: 172be61a-9aa3-4ce7-8e8d-a50debb46b50
+      name: 6-a
+    - uuid: e5ed6a93-5be5-4d84-8d1a-02575cf28e7e
+      name: 6-b
+  - uuid: 5bf75af1-d481-4fc6-a149-304a8ba8f519
+    name: frequency_545_ghz
+    children:
+    - uuid: be8ffab8-ed53-4f5b-89da-0bde72373ca9
+      name: '1'
+    - uuid: b294bbcd-677f-4870-84cb-c87d7012aeb7
+      name: '2'
+    - uuid: bdf41e21-57cc-4df0-bd6c-919654d5ae7e
+      name: '3'
+    - uuid: 744cd290-8055-4e80-bf6a-bc99a8dd270d
+      name: '4'
+  - uuid: c6bd5095-343f-4b16-a0f6-2eb2984799f1
+    name: frequency_857_ghz
+    children:
+    - uuid: 30d6f5e1-5989-42d6-a351-6ee994a3ab0d
+      name: '1'
+    - uuid: 7ef2cfaa-6b02-4b5e-9cea-4c53aa037f3d
+      name: '2'
+    - uuid: 14576d6d-9ee7-4591-82ed-70ba71072bd4
+      name: '3'
+    - uuid: 2bbd5423-89ab-4c8e-8d0b-9c652a7d4b27
+      name: '4'
+format_specifications:
+- uuid: 666a0f4f-2c30-4f3d-af47-128a779b02e2
+  document_ref: MOCK_DOCUMENT_REF_001
+  title: Definition of the orbital parameters
+  doc_file_name: payload_orbital_parameters.txt
+  file_mime_type: application/vnd.ms-excel
+  doc_mime_type: text/plain
+  file_path: format_spec/666a0f4f-2c30-4f3d-af47-128a779b02e2_payload_orbital_parameters.txt
+- uuid: d4c2fb2b-061d-4854-a9be-1986cfe6f130
+  document_ref: MOCK_DOCUMENT_REF_002
+  title: Characteristics of the Planck payload
+  doc_file_name: payload_characteristics.txt
+  file_mime_type: application/json
+  doc_mime_type: text/plain
+  file_path: format_spec/d4c2fb2b-061d-4854-a9be-1986cfe6f130_payload_characteristics.txt
+- uuid: 480a2147-85ad-437e-930f-0356d786bb5f
+  document_ref: MOCK_DOCUMENT_REF_003
+  title: Telescope reference frames
+  doc_file_name: telescope_characteristics.txt
+  file_mime_type: application/vnd.ms-excel
+  doc_mime_type: text/plain
+  file_path: format_spec/480a2147-85ad-437e-930f-0356d786bb5f_telescope_characteristics.txt
+- uuid: e406caf2-95c0-4e18-8980-a86934479423
+  document_ref: MOCK_DOCUMENT_REF_005
+  title: Specification of bandpasses for HFI and LFI
+  doc_file_name: planck_bandpasses.txt
+  file_mime_type: text/csv
+  doc_mime_type: text/plain
+  file_path: format_spec/e406caf2-95c0-4e18-8980-a86934479423_planck_bandpasses.txt
+- uuid: 250b6f9a-2942-4a84-a315-9c554bd0b469
+  document_ref: MOCK_DOCUMENT_REF_006
+  title: Specification of the focal plane (reduced)
+  doc_file_name: planck_reduced_focal_plane.txt
+  file_mime_type: text/json
+  doc_mime_type: text/plain
+  file_path: format_spec/250b6f9a-2942-4a84-a315-9c554bd0b469_planck_reduced_focal_plane.txt
+- uuid: 1e1631e6-cd32-4232-a2c6-9f317db86aca
+  document_ref: MOCK_DOCUMENT_REF_007
+  title: Specification of the focal plane (full)
+  doc_file_name: planck_full_focal_plane.txt
+  file_mime_type: text/json
+  doc_mime_type: text/plain
+  file_path: format_spec/1e1631e6-cd32-4232-a2c6-9f317db86aca_planck_full_focal_plane.txt
+quantities:
+- uuid: 072031fe-c5a9-4797-80c9-6f82320dd039
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 143fd54f-ab92-47d1-b1b9-78895343c27a
+- uuid: 0a5c7c1a-ac40-4b51-ba8f-32e741dd76c4
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 2b7a4029-1b3d-404f-b9d1-87f6dcff77c6
+- uuid: 0c6886b7-8e90-4336-9e30-d6334bfdedf0
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: '08b6ed2f-bd84-4618-b6ca-5e4368c2bc85'
+- uuid: 19984685-6dcd-45d6-a645-bfb13aa0246f
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 364a3324-e373-40de-a0be-7d7e086740d3
+- uuid: 1ae34d10-cc69-4aaf-9996-28da31e6c38c
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: dee784c4-3310-4eec-8c00-92da8f290fef
+- uuid: 1b12eab7-b330-4c63-a560-d87eadfa1497
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 744cd290-8055-4e80-bf6a-bc99a8dd270d
+- uuid: 1c069c0f-59e4-418b-b923-04554c98a1d1
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 51828fc8-fd43-4aef-ad51-5bfd50013e46
+- uuid: 24dc66ee-2fce-4961-bd0c-58c92cbe8cf5
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 8aecb988-64a1-463e-8603-e45bcec64d51
+- uuid: 2946e061-0e19-4207-93fa-fb316602f8ee
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 58dcf697-1dd0-4845-bc10-8ffd00e160f9
+- uuid: 2cf1f5d2-1171-471b-a161-79484dc1f6e9
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: e5ed6a93-5be5-4d84-8d1a-02575cf28e7e
+- uuid: 2ef8c55c-4142-4222-9437-a74eaa420f0c
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 5bf75af1-d481-4fc6-a149-304a8ba8f519
+- uuid: 2ffd6a22-5e16-46c8-8723-bb196a21314a
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 40e3b602-2eb0-4c7e-8ef9-0e9ce2a6b5d7
+- uuid: 300b9bbf-6e36-4003-83f5-db8687d5a3fe
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 192c25e2-886a-4d25-84bd-16c510771267
+- uuid: 31926a70-9f33-4b63-ad37-e90a6a8392eb
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: dba6e626-0cc3-4cb3-87e6-f4d1a6b35030
+- uuid: 408bd32a-3a66-4a85-a714-8bfc7d14cd75
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: c703cb6f-398c-4b0d-ad98-6452ea01c19c
+- uuid: 40ea1d54-17c2-40cf-923a-5bb089cd92b9
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: fa4cdbb9-8423-4ff6-a16c-4ea8daba97c6
+- uuid: 41833d97-eca8-47d0-aee6-ed10bac765d8
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: cae7d2ed-b6cd-4648-bb3d-cc140cf6267e
+- uuid: 4c59c87a-7afa-41f3-892b-a897f8793757
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: '068aeb17-6a7b-487d-a74a-f37102e58577'
+- uuid: 51056ddb-d338-4aa4-aae9-38adcfcb68a3
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 01a77d62-bbd7-449b-8896-dc6bb898212c
+- uuid: 531bdc78-a2db-4125-b735-5f8db91e4c3b
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: bdf41e21-57cc-4df0-bd6c-919654d5ae7e
+- uuid: 54ec9700-e92f-4b1a-8ff7-54bdfdb7444b
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 472b9e92-02be-47a4-9c3d-c52259693396
+- uuid: 60a3abfd-3083-41e6-a11e-447fec67563d
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 73106350-c2c7-43c5-924c-6404dcab8481
+- uuid: 60efa71a-1aae-4283-8dbe-6848c36d4da7
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 1f138214-7cfb-4801-bd51-779ece97b5ab
+- uuid: 66f698a9-4900-4026-81e8-4987582c6eb8
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 8a615527-9304-4b85-9b8c-fd80a6831552
+- uuid: 6b846065-5aa6-4d61-bf59-e28527167c14
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 4ba33c4b-362e-49b2-aa02-5fb4a4cc8608
+- uuid: 6bbded86-905d-4595-b051-31ee89f28ef6
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 2bbd5423-89ab-4c8e-8d0b-9c652a7d4b27
+- uuid: 6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 8734a013-4184-412c-ab5a-963388beae34
+- uuid: 73f2e368-66d7-41ef-9224-14d2d43812df
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 59ae28e2-b8d5-4e9d-be8c-6a1c8eac462d
+- uuid: 7747af8d-91fd-4da2-a414-4abb033ae848
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 24a94d36-d114-48a0-ae0c-b7251bfcf239
+- uuid: 775102c8-8c1c-491a-9314-4c1dae6ba9de
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: c98e2217-e589-4b24-b0a7-fc81e171e10d
+- uuid: 78fc3de4-7007-4c67-8cbf-1b2535315e98
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: c6bd5095-343f-4b16-a0f6-2eb2984799f1
+- uuid: 7c362d75-76f7-4364-ac04-1b069e5bbe91
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: '09df4473-fb18-48f5-9994-9e5a76b6658e'
+- uuid: 7dd86c18-cacb-4e40-9b9e-ff6d71f48a8c
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 9b244fb3-e510-46d2-9595-1bd4069ea781
+- uuid: 7de75d9c-b576-4a68-8ef4-de8704514bd5
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: db33f958-d1bc-457f-9340-498df578aa4f
+- uuid: 8484d90d-5061-479d-b6c6-c8ae56da7ae8
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 8df25e57-bba4-442a-976b-0846ff6146b8
+- uuid: 84ce8c49-edaf-4a0b-b666-3a8402389e1c
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 9220c3ee-205b-4cc6-81d5-3d91b96b9ff3
+- uuid: 86025c12-8805-499e-9f78-7ab9a4eb8b42
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: cdbd2118-86e2-4828-a71f-89ee871bbd0f
+- uuid: 8b5b6370-9cd8-4358-91e7-1c811e14efbb
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 377573a4-92bf-418b-9c90-d8fccb89cd31
+- uuid: 8cb8bfe2-41a5-4591-b194-c35c7bc7e206
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 7ef2cfaa-6b02-4b5e-9cea-4c53aa037f3d
+- uuid: 90c6cee6-c717-4382-b593-d126ef7a876e
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 494895af-2cf4-4e87-81fe-f5f646db1411
+- uuid: 93889947-50fb-4301-97a7-11e0b49a4f7e
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 4303ec99-bb2c-46f4-9120-b10885cd3935
+- uuid: 951fd6f1-e265-4c0f-8b3b-c27c51b0c263
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: b3386894-40a3-4664-aaf6-f78d944943e2
+- uuid: 95774b8f-9bc2-4ffa-bf3c-745399b8208d
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: be8ffab8-ed53-4f5b-89da-0bde72373ca9
+- uuid: 9b5c2e1a-ebee-48ac-9ea5-78a2f45c4b06
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 81ae2e54-449f-41b8-ba09-8269816fe0dc
+- uuid: 9ee921cf-2be7-42e1-b317-40a7acb0a390
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 87b5a2a2-a6bd-4845-9bb5-d954af005d65
+- uuid: 9ef018e4-6fdd-45d9-9a1e-6d5545520c9e
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 7bd97cb7-d823-4140-8a5d-94db52839cbf
+- uuid: a6c8164b-bf39-4151-b385-3c8dfc107719
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 31318e7c-2c22-47fd-b840-39d1b60d7fa8
+- uuid: a932062d-f388-420a-97a3-88c409681d64
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: fd80c307-c131-4edd-8718-cde8c2cd6b5c
+- uuid: b0fbd558-475b-4245-a13b-7582e169fa87
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 30d6f5e1-5989-42d6-a351-6ee994a3ab0d
+- uuid: b669ad9a-db54-4e97-8b11-4e56f69b19e7
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 84715e56-133b-4488-9eca-49359fb4d889
+- uuid: b8d96de5-988d-4a11-8022-cec560a2436b
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: b294bbcd-677f-4870-84cb-c87d7012aeb7
+- uuid: bb8b8e5d-119d-4996-910d-47c8065ba9d8
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: c02266f3-a219-4c7c-a1d0-e22d07db7a3d
+- uuid: bdeee446-de46-41e2-8f3f-b3a5b7c5ea3f
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 47dbec12-12c0-4aa2-be22-1e17d7c32765
+- uuid: c475cf15-4770-4abc-9434-be56f8d0e3d6
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 4494d482-13dc-41fd-947b-d6cfdcb9d309
+- uuid: c4e7864c-2859-4ba7-81ae-a2aa18ee9f50
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 2d9861a0-14b3-41cf-ab71-d7201421b7d8
+- uuid: c6bd8509-8549-44db-bd33-ccc9c4827701
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: e0d75c53-ff6a-4d6b-8bb3-a46cc939df70
+- uuid: c82a7411-a0e9-4b7e-b245-8422e339820f
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: a619e104-35ff-48e4-8408-a0e22af05303
+- uuid: c9f6bb49-2bc7-4b8e-9bb3-92c81a7b0822
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: e754bbb1-545a-46b1-a2e8-a2062bd5836b
+- uuid: cb2c7053-57c2-492f-b9a8-7f7f560b06be
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 26e79830-50f0-49a2-9f84-867705ff0bad
+- uuid: d0215a1e-9b5e-4d2e-9f55-5968cb933d13
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 1b9e18ea-07e1-43a6-a646-99b3c2030ce4
+- uuid: d1349f5e-9053-46ab-be00-90bac3bf88dd
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 5d8e0271-75f7-44be-852c-4a83ea622c4b
+- uuid: d14d840f-755c-4150-b7a4-d01a291d319f
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: dda366ba-50ed-47ec-ac76-44e1f69fd312
+- uuid: da2ef38e-786d-4fb9-9eb0-4f2ffd7744f7
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 7ad49fe8-c742-4bf0-b221-eaa932d7f516
+- uuid: dbeace68-f392-4f40-b446-52065338cbec
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 38341d64-16d0-4251-af84-d3d3ab5b8a9f
+- uuid: dc9d218e-18b2-482c-b866-eac8c13d615a
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 172be61a-9aa3-4ce7-8e8d-a50debb46b50
+- uuid: ebc60c5e-2c8d-43e6-b979-742394099a5b
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 14576d6d-9ee7-4591-82ed-70ba71072bd4
+- uuid: ed710d9f-ee9e-4010-a4c5-31790580fa17
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 36c6d793-5823-4542-afcb-2468f434162b
+- uuid: f244c407-321d-4edf-9283-e1f25468b6bf
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 93609272-0812-4a1f-9c0d-99ceb04fe048
+- uuid: fc12f6b7-91fd-4661-a4a2-c08e1a038d96
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 9ed11837-dedd-468e-b404-dae6bba0beb7
+- uuid: fc3798a6-0d9c-489d-a4bd-958921b4558b
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: 1f755446-be00-4cca-8133-baa38468bed4
+- uuid: fea6f626-c992-438d-8972-96111a19a46a
+  name: bandpass
+  format_spec: e406caf2-95c0-4e18-8980-a86934479423
+  entity: a010e190-4db0-458b-a50e-12315c611c93
+- uuid: 15651785-e8a9-4924-92ee-f58747588e51
+  name: characteristics
+  format_spec: d4c2fb2b-061d-4854-a9be-1986cfe6f130
+  entity: 564faff1-ef68-4e40-a2d1-9adb8d00d5c1
+- uuid: 8f2bf8be-d3cb-4dce-98ab-cea34b139650
+  name: full_focal_plane
+  format_spec: 1e1631e6-cd32-4232-a2c6-9f317db86aca
+  entity: ff2a87bd-9a64-4ab5-9456-d5ffeae9ea23
+- uuid: a862183e-572f-4629-9eec-fb3abeb21aa2
+  name: full_focal_plane
+  format_spec: 1e1631e6-cd32-4232-a2c6-9f317db86aca
+  entity: ff5c3ca2-6789-415e-ae4e-eb68d086baa4
+- uuid: 4e75f4f4-c48f-4dc0-9a56-45a74b2c2d34
+  name: orbital_parameters
+  format_spec: 666a0f4f-2c30-4f3d-af47-128a779b02e2
+  entity: 564faff1-ef68-4e40-a2d1-9adb8d00d5c1
+- uuid: c20f4b61-0162-4316-8d8e-d768287123e1
+  name: reduced_focal_plane
+  format_spec: 250b6f9a-2942-4a84-a315-9c554bd0b469
+  entity: ff5c3ca2-6789-415e-ae4e-eb68d086baa4
+- uuid: 19e0c140-6140-4b49-bd0b-364f434f5bfc
+  name: telescope_characteristics
+  format_spec: 480a2147-85ad-437e-930f-0356d786bb5f
+  entity: 564faff1-ef68-4e40-a2d1-9adb8d00d5c1
+data_files:
+- uuid: 460024bb-5425-4e2d-bb41-aae7a46be20b
+  name: bandpass030.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 951fd6f1-e265-4c0f-8b3b-c27c51b0c263
+  spec_version: '1.0'
+  file_name: data_files/460024bb-5425-4e2d-bb41-aae7a46be20b_bandpass030.csv
+  plot_file: plot_files/460024bb-5425-4e2d-bb41-aae7a46be20b_bandpass030.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 205dcd9e-f2bc-44b6-9b4d-a41b7ba42e76
+  name: bandpass044.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 0a5c7c1a-ac40-4b51-ba8f-32e741dd76c4
+  spec_version: '1.0'
+  file_name: data_files/205dcd9e-f2bc-44b6-9b4d-a41b7ba42e76_bandpass044.csv
+  plot_file: plot_files/205dcd9e-f2bc-44b6-9b4d-a41b7ba42e76_bandpass044.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 90ceeaca-9b4b-48bf-86c8-6c5bff0cad7f
+  name: bandpass070.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 93889947-50fb-4301-97a7-11e0b49a4f7e
+  spec_version: '1.0'
+  file_name: data_files/90ceeaca-9b4b-48bf-86c8-6c5bff0cad7f_bandpass070.csv
+  plot_file: plot_files/90ceeaca-9b4b-48bf-86c8-6c5bff0cad7f_bandpass070.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: c6eb142e-abfe-4783-ac93-84f330624ff1
+  name: bandpass100.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 7747af8d-91fd-4da2-a414-4abb033ae848
+  spec_version: '1.0'
+  file_name: data_files/c6eb142e-abfe-4783-ac93-84f330624ff1_bandpass100.csv
+  plot_file: plot_files/c6eb142e-abfe-4783-ac93-84f330624ff1_bandpass100.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 8237f6b7-0974-4221-9efb-9079eaecb4c2
+  name: bandpass143.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: c82a7411-a0e9-4b7e-b245-8422e339820f
+  spec_version: '1.0'
+  file_name: data_files/8237f6b7-0974-4221-9efb-9079eaecb4c2_bandpass143.csv
+  plot_file: plot_files/8237f6b7-0974-4221-9efb-9079eaecb4c2_bandpass143.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 3a29d860-2289-4691-82de-1fcb4adfff0e
+  name: bandpass217.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: fea6f626-c992-438d-8972-96111a19a46a
+  spec_version: '1.0'
+  file_name: data_files/3a29d860-2289-4691-82de-1fcb4adfff0e_bandpass217.csv
+  plot_file: plot_files/3a29d860-2289-4691-82de-1fcb4adfff0e_bandpass217.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 3a514926-ea2e-4e69-996e-2eedc2894a1c
+  name: bandpass353.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 408bd32a-3a66-4a85-a714-8bfc7d14cd75
+  spec_version: '1.0'
+  file_name: data_files/3a514926-ea2e-4e69-996e-2eedc2894a1c_bandpass353.csv
+  plot_file: plot_files/3a514926-ea2e-4e69-996e-2eedc2894a1c_bandpass353.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 43638c42-e42c-49c0-8ee3-09218f5fa73c
+  name: bandpass545.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 2ef8c55c-4142-4222-9437-a74eaa420f0c
+  spec_version: '1.0'
+  file_name: data_files/43638c42-e42c-49c0-8ee3-09218f5fa73c_bandpass545.csv
+  plot_file: plot_files/43638c42-e42c-49c0-8ee3-09218f5fa73c_bandpass545.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: f7248286-5c1d-481a-af34-50ecd4787935
+  name: bandpass857.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 78fc3de4-7007-4c67-8cbf-1b2535315e98
+  spec_version: '1.0'
+  file_name: data_files/f7248286-5c1d-481a-af34-50ecd4787935_bandpass857.csv
+  plot_file: plot_files/f7248286-5c1d-481a-af34-50ecd4787935_bandpass857.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: c19c83d5-34cf-4c94-8bf5-3158422de7f0
+  name: bandpass_detector_18M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 072031fe-c5a9-4797-80c9-6f82320dd039
+  spec_version: '1.0'
+  file_name: data_files/c19c83d5-34cf-4c94-8bf5-3158422de7f0_bandpass_detector_18M.csv
+  dependencies: []
+- uuid: ff8374ac-c347-4924-bf73-dc05d28c0ed3
+  name: bandpass_detector_18S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 31926a70-9f33-4b63-ad37-e90a6a8392eb
+  spec_version: '1.0'
+  file_name: data_files/ff8374ac-c347-4924-bf73-dc05d28c0ed3_bandpass_detector_18S.csv
+  dependencies: []
+- uuid: 24b9660c-b1a5-491e-916c-b9459219543e
+  name: bandpass_detector_19M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: d0215a1e-9b5e-4d2e-9f55-5968cb933d13
+  spec_version: '1.0'
+  file_name: data_files/24b9660c-b1a5-491e-916c-b9459219543e_bandpass_detector_19M.csv
+  dependencies: []
+- uuid: 43514e4a-bc6b-4a16-95f9-f1bc69f2e9cc
+  name: bandpass_detector_19S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 6b846065-5aa6-4d61-bf59-e28527167c14
+  spec_version: '1.0'
+  file_name: data_files/43514e4a-bc6b-4a16-95f9-f1bc69f2e9cc_bandpass_detector_19S.csv
+  dependencies: []
+- uuid: 18190c40-d4dc-40cc-8d8f-959dc1c1cac0
+  name: bandpass_detector_20M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 9b5c2e1a-ebee-48ac-9ea5-78a2f45c4b06
+  spec_version: '1.0'
+  file_name: data_files/18190c40-d4dc-40cc-8d8f-959dc1c1cac0_bandpass_detector_20M.csv
+  dependencies: []
+- uuid: '02815676-74a9-4162-90a8-8949cdb19b95'
+  name: bandpass_detector_20S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 7de75d9c-b576-4a68-8ef4-de8704514bd5
+  spec_version: '1.0'
+  file_name: data_files/02815676-74a9-4162-90a8-8949cdb19b95_bandpass_detector_20S.csv
+  dependencies: []
+- uuid: 2f56c103-589a-4119-86b3-c1a0b9b1dcac
+  name: bandpass_detector_21M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 7c362d75-76f7-4364-ac04-1b069e5bbe91
+  spec_version: '1.0'
+  file_name: data_files/2f56c103-589a-4119-86b3-c1a0b9b1dcac_bandpass_detector_21M.csv
+  dependencies: []
+- uuid: b9b97cea-b57b-4daa-b523-3678eac839a1
+  name: bandpass_detector_21S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: fc12f6b7-91fd-4661-a4a2-c08e1a038d96
+  spec_version: '1.0'
+  file_name: data_files/b9b97cea-b57b-4daa-b523-3678eac839a1_bandpass_detector_21S.csv
+  dependencies: []
+- uuid: a78a19cc-8043-4beb-a6f1-1ee4e59dd45b
+  name: bandpass_detector_22M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 1c069c0f-59e4-418b-b923-04554c98a1d1
+  spec_version: '1.0'
+  file_name: data_files/a78a19cc-8043-4beb-a6f1-1ee4e59dd45b_bandpass_detector_22M.csv
+  dependencies: []
+- uuid: c789e9c1-ac22-42bd-a518-322f418dc5ff
+  name: bandpass_detector_22S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 300b9bbf-6e36-4003-83f5-db8687d5a3fe
+  spec_version: '1.0'
+  file_name: data_files/c789e9c1-ac22-42bd-a518-322f418dc5ff_bandpass_detector_22S.csv
+  dependencies: []
+- uuid: 9de8972a-de9f-49fc-af57-2858d21f3f38
+  name: bandpass_detector_23M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: bb8b8e5d-119d-4996-910d-47c8065ba9d8
+  spec_version: '1.0'
+  file_name: data_files/9de8972a-de9f-49fc-af57-2858d21f3f38_bandpass_detector_23M.csv
+  dependencies: []
+- uuid: 896a6499-6bf0-445d-85db-b311c27afc9a
+  name: bandpass_detector_23S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 9ef018e4-6fdd-45d9-9a1e-6d5545520c9e
+  spec_version: '1.0'
+  file_name: data_files/896a6499-6bf0-445d-85db-b311c27afc9a_bandpass_detector_23S.csv
+  dependencies: []
+- uuid: 3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac
+  name: bandpass_detector_24M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 7dd86c18-cacb-4e40-9b9e-ff6d71f48a8c
+  spec_version: '1.0'
+  file_name: data_files/3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac_bandpass_detector_24M.csv
+  dependencies: []
+- uuid: d8c0754c-3399-4eee-ae0a-289717960b60
+  name: bandpass_detector_24S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: c475cf15-4770-4abc-9434-be56f8d0e3d6
+  spec_version: '1.0'
+  file_name: data_files/d8c0754c-3399-4eee-ae0a-289717960b60_bandpass_detector_24S.csv
+  dependencies: []
+- uuid: c4a3d09d-56e5-49f2-8fb1-3f26d58f3175
+  name: bandpass_detector_25M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 0c6886b7-8e90-4336-9e30-d6334bfdedf0
+  spec_version: '1.0'
+  file_name: data_files/c4a3d09d-56e5-49f2-8fb1-3f26d58f3175_bandpass_detector_25M.csv
+  dependencies: []
+- uuid: ae866452-107c-47f8-a506-59ed76777dc6
+  name: bandpass_detector_25S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 40ea1d54-17c2-40cf-923a-5bb089cd92b9
+  spec_version: '1.0'
+  file_name: data_files/ae866452-107c-47f8-a506-59ed76777dc6_bandpass_detector_25S.csv
+  dependencies: []
+- uuid: 8d324497-1feb-4329-9db5-79fce23a3728
+  name: bandpass_detector_26M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: a6c8164b-bf39-4151-b385-3c8dfc107719
+  spec_version: '1.0'
+  file_name: data_files/8d324497-1feb-4329-9db5-79fce23a3728_bandpass_detector_26M.csv
+  dependencies: []
+- uuid: 436505f3-573e-4c8c-93cb-e5260d1c62da
+  name: bandpass_detector_26S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: cb2c7053-57c2-492f-b9a8-7f7f560b06be
+  spec_version: '1.0'
+  file_name: data_files/436505f3-573e-4c8c-93cb-e5260d1c62da_bandpass_detector_26S.csv
+  dependencies: []
+- uuid: ed8ef738-ef1e-474b-b867-646c74f89694
+  name: bandpass_detector_27M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53
+  spec_version: '1.0'
+  file_name: data_files/ed8ef738-ef1e-474b-b867-646c74f89694_bandpass_detector_27M.csv
+  dependencies: []
+- uuid: 3de6342d-7688-4d9c-ae84-f1216ccad186
+  name: bandpass_detector_27S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 775102c8-8c1c-491a-9314-4c1dae6ba9de
+  spec_version: '1.0'
+  file_name: data_files/3de6342d-7688-4d9c-ae84-f1216ccad186_bandpass_detector_27S.csv
+  dependencies: []
+- uuid: 7bf01b19-3124-46b4-84b5-a6ecace72583
+  name: bandpass_detector_28M.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 8b5b6370-9cd8-4358-91e7-1c811e14efbb
+  spec_version: '1.0'
+  file_name: data_files/7bf01b19-3124-46b4-84b5-a6ecace72583_bandpass_detector_28M.csv
+  dependencies: []
+- uuid: fcd0b323-4d7b-406c-95a5-1337a96f611a
+  name: bandpass_detector_28S.csv
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: 86025c12-8805-499e-9f78-7ab9a4eb8b42
+  spec_version: '1.0'
+  file_name: data_files/fcd0b323-4d7b-406c-95a5-1337a96f611a_bandpass_detector_28S.csv
+  dependencies: []
+- uuid: 25109593-c5e2-4b60-b06e-ac5e6c3b7b83
+  name: file
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: c20f4b61-0162-4316-8d8e-d768287123e1
+  spec_version: '1.0'
+  metadata:
+    '030':
+      frequency: '030'
+      fwhm: 33.102652125
+      noise: 0.0001480171
+      centralfreq: 28.3999996185
+      fwhm_eff: 32.2879981995
+      fwhm_eff_sigma: 0.0209999997
+      ellipticity_eff: 1.3150000572
+      ellipticity_eff_sigma: 0.0309999995
+      solid_angle_eff: 1190.1109619141
+      solid_angle_eff_sigma: 0.7049999833
+    '044':
+      frequency: '044'
+      fwhm: 27.94348615
+      noise: 0.0001740843
+      centralfreq: 44.0999984741
+      fwhm_eff: 26.9969997406
+      fwhm_eff_sigma: 0.5830000043
+      ellipticity_eff: 1.1900000572
+      ellipticity_eff_sigma: 0.0299999993
+      solid_angle_eff: 831.6110229492
+      solid_angle_eff_sigma: 35.0410003662
+    '070':
+      frequency: '070'
+      fwhm: 13.07645961
+      noise: 0.0001518777
+      centralfreq: 70.4000015259
+      fwhm_eff: 13.218000412
+      fwhm_eff_sigma: 0.0309999995
+      ellipticity_eff: 1.2230000496
+      ellipticity_eff_sigma: 0.0370000005
+      solid_angle_eff: 200.8029937744
+      solid_angle_eff_sigma: 0.9909999967
+  dependencies: []
+- uuid: 87230a9f-70c7-4fa3-8843-834d52c9fd06
+  name: file
+  upload_date: '2017-09-26 00:00:00+00:00'
+  quantity: a862183e-572f-4629-9eec-fb3abeb21aa2
+  spec_version: '1.0'
+  metadata:
+    LFI18S:
+      detector: LFI18S
+      phi_uv_deg: -131.81993418
+      theta_uv_deg: 3.334289196
+      psi_uv_deg: 22.15
+      psi_pol_deg: 0
+      epsilon: 0.0011071335
+      fwhm_arcmin: 13.4592042
+      ellipticity: 1.278
+    LFI18M:
+      detector: LFI18M
+      phi_uv_deg: -131.828280713
+      theta_uv_deg: 3.334115892
+      psi_uv_deg: 22.15
+      psi_pol_deg: 90.2
+      epsilon: 0.0016323001
+      fwhm_arcmin: 13.40197062
+      ellipticity: 1.2345
+    LFI19S:
+      detector: LFI19S
+      phi_uv_deg: -150.4877839
+      theta_uv_deg: 3.20940304
+      psi_uv_deg: 22.4
+      psi_pol_deg: 0
+      epsilon: 0.0011981191
+      fwhm_arcmin: 13.08690252
+      ellipticity: 1.2809
+    LFI19M:
+      detector: LFI19M
+      phi_uv_deg: -150.481524354
+      theta_uv_deg: 3.2094237
+      psi_uv_deg: 22.4
+      psi_pol_deg: 90
+      epsilon: 0.002538049
+      fwhm_arcmin: 13.13523132
+      ellipticity: 1.2492
+    LFI20S:
+      detector: LFI20S
+      phi_uv_deg: -168.194131988
+      theta_uv_deg: 3.184805499
+      psi_uv_deg: 22.38
+      psi_pol_deg: 0
+      epsilon: 0.0003173949
+      fwhm_arcmin: 12.83028228
+      ellipticity: 1.2894
+    LFI20M:
+      detector: LFI20M
+      phi_uv_deg: -168.182364352
+      theta_uv_deg: 3.184449966
+      psi_uv_deg: 22.38
+      psi_pol_deg: 89.9
+      epsilon: 0.0006790473
+      fwhm_arcmin: 12.82898706
+      ellipticity: 1.2703
+    LFI21S:
+      detector: LFI21S
+      phi_uv_deg: 169.270800509
+      theta_uv_deg: 3.185314648
+      psi_uv_deg: -22.38
+      psi_pol_deg: 0
+      epsilon: 0.0002529298
+      fwhm_arcmin: 12.86136816
+      ellipticity: 1.2941
+    LFI21M:
+      detector: LFI21M
+      phi_uv_deg: 169.280933171
+      theta_uv_deg: 3.185856133
+      psi_uv_deg: -22.38
+      psi_pol_deg: 90.1
+      epsilon: 0.0007974436
+      fwhm_arcmin: 12.75127242
+      ellipticity: 1.2803
+    LFI22S:
+      detector: LFI22S
+      phi_uv_deg: 151.37056161
+      theta_uv_deg: 3.173953785
+      psi_uv_deg: -22.34
+      psi_pol_deg: 0.1
+      epsilon: 0.0014581426
+      fwhm_arcmin: 12.98579256
+      ellipticity: 1.2786
+    LFI22M:
+      detector: LFI22M
+      phi_uv_deg: 151.360376597
+      theta_uv_deg: 3.173745645
+      psi_uv_deg: -22.34
+      psi_pol_deg: 90.1
+      epsilon: 0.0027720432
+      fwhm_arcmin: 12.92127318
+      ellipticity: 1.2645
+    LFI23S:
+      detector: LFI23S
+      phi_uv_deg: 132.279661507
+      theta_uv_deg: 3.281360837
+      psi_uv_deg: -22.08
+      psi_pol_deg: 0
+      epsilon: 0.0017640058
+      fwhm_arcmin: 13.332756
+      ellipticity: 1.2794
+    LFI23M:
+      detector: LFI23M
+      phi_uv_deg: 132.259118023
+      theta_uv_deg: 3.281368261
+      psi_uv_deg: -22.08
+      psi_pol_deg: 89.7
+      epsilon: 0.0022913952
+      fwhm_arcmin: 13.322475
+      ellipticity: 1.2353
+    LFI24S:
+      detector: LFI24S
+      phi_uv_deg: -179.505392209
+      theta_uv_deg: 4.071417043
+      psi_uv_deg: 0.01
+      psi_pol_deg: 0
+      epsilon: 0.0001679191
+      fwhm_arcmin: 23.02887168
+      ellipticity: 1.3437
+    LFI24M:
+      detector: LFI24M
+      phi_uv_deg: -179.539804815
+      theta_uv_deg: 4.07251102
+      psi_uv_deg: 0.01
+      psi_pol_deg: 90
+      epsilon: 0.0001732208
+      fwhm_arcmin: 23.1792819
+      ellipticity: 1.388
+    LFI25S:
+      detector: LFI25S
+      phi_uv_deg: 61.125309612
+      theta_uv_deg: 4.983155894
+      psi_uv_deg: -113.23
+      psi_pol_deg: 0
+      epsilon: 0.0007957928
+      fwhm_arcmin: 30.78592608
+      ellipticity: 1.1882
+    LFI25M:
+      detector: LFI25M
+      phi_uv_deg: 61.092970732
+      theta_uv_deg: 4.983509821
+      psi_uv_deg: -113.23
+      psi_pol_deg: 89.5
+      epsilon: 0.000749549
+      fwhm_arcmin: 30.0152559
+      ellipticity: 1.1914
+    LFI26S:
+      detector: LFI26S
+      phi_uv_deg: -61.675227539
+      theta_uv_deg: 5.036198824
+      psi_uv_deg: 113.23
+      psi_pol_deg: 0
+      epsilon: 0.0028333485
+      fwhm_arcmin: 30.52218204
+      ellipticity: 1.1886
+    LFI26M:
+      detector: LFI26M
+      phi_uv_deg: -61.670013546
+      theta_uv_deg: 5.035819216
+      psi_uv_deg: 113.23
+      psi_pol_deg: 90.5
+      epsilon: 0.0023561341
+      fwhm_arcmin: 30.1293993
+      ellipticity: 1.1911
+    LFI27S:
+      detector: LFI27S
+      phi_uv_deg: 153.98498607
+      theta_uv_deg: 4.346091361
+      psi_uv_deg: -22.46
+      psi_pol_deg: 0
+      epsilon: 4.65479e-05
+      fwhm_arcmin: 33.1613226
+      ellipticity: 1.3789
+    LFI27M:
+      detector: LFI27M
+      phi_uv_deg: 153.987200079
+      theta_uv_deg: 4.345964487
+      psi_uv_deg: -22.46
+      psi_pol_deg: 89.7
+      epsilon: 0.0001324952
+      fwhm_arcmin: 32.95756458
+      ellipticity: 1.3643
+    LFI28S:
+      detector: LFI28S
+      phi_uv_deg: -153.418020781
+      theta_uv_deg: 4.375284092
+      psi_uv_deg: 22.45
+      psi_pol_deg: 0
+      epsilon: 0.0001071519
+      fwhm_arcmin: 33.11849862
+      ellipticity: 1.3669
+    LFI28M:
+      detector: LFI28M
+      phi_uv_deg: -153.423530136
+      theta_uv_deg: 4.375677172
+      psi_uv_deg: 22.45
+      psi_pol_deg: 90.3
+      epsilon: 0.0001072013
+      fwhm_arcmin: 33.1732227
+      ellipticity: 1.3662
+  dependencies: []
+- uuid: 6ce7a340-026f-4d14-ac14-95fc8eaaa8f2
+  name: bandpass030.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 951fd6f1-e265-4c0f-8b3b-c27c51b0c263
+  spec_version: '1.0'
+  file_name: data_files/6ce7a340-026f-4d14-ac14-95fc8eaaa8f2_bandpass030.csv
+  plot_file: plot_files/6ce7a340-026f-4d14-ac14-95fc8eaaa8f2_bandpass030.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 7046b7b9-618b-45b2-9701-c49fc9ac1462
+  name: bandpass044.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 0a5c7c1a-ac40-4b51-ba8f-32e741dd76c4
+  spec_version: '1.0'
+  file_name: data_files/7046b7b9-618b-45b2-9701-c49fc9ac1462_bandpass044.csv
+  plot_file: plot_files/7046b7b9-618b-45b2-9701-c49fc9ac1462_bandpass044.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 26b25ee4-699d-4c91-b7a7-3e008ff0a709
+  name: bandpass070.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 93889947-50fb-4301-97a7-11e0b49a4f7e
+  spec_version: '1.0'
+  file_name: data_files/26b25ee4-699d-4c91-b7a7-3e008ff0a709_bandpass070.csv
+  plot_file: plot_files/26b25ee4-699d-4c91-b7a7-3e008ff0a709_bandpass070.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 9d8c92ec-75ca-4331-9c52-0a57c01e6eaa
+  name: bandpass100.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 7747af8d-91fd-4da2-a414-4abb033ae848
+  spec_version: '1.0'
+  file_name: data_files/9d8c92ec-75ca-4331-9c52-0a57c01e6eaa_bandpass100.csv
+  plot_file: plot_files/9d8c92ec-75ca-4331-9c52-0a57c01e6eaa_bandpass100.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 75dee1ae-073b-43bd-8ac2-f147ff749ebe
+  name: bandpass143.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: c82a7411-a0e9-4b7e-b245-8422e339820f
+  spec_version: '1.0'
+  file_name: data_files/75dee1ae-073b-43bd-8ac2-f147ff749ebe_bandpass143.csv
+  plot_file: plot_files/75dee1ae-073b-43bd-8ac2-f147ff749ebe_bandpass143.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: d85fb364-56a2-4745-8139-a117d64d47f4
+  name: bandpass217.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: fea6f626-c992-438d-8972-96111a19a46a
+  spec_version: '1.0'
+  file_name: data_files/d85fb364-56a2-4745-8139-a117d64d47f4_bandpass217.csv
+  plot_file: plot_files/d85fb364-56a2-4745-8139-a117d64d47f4_bandpass217.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 9f5d864a-4571-4e54-a9d4-e2b375f411b8
+  name: bandpass353.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 408bd32a-3a66-4a85-a714-8bfc7d14cd75
+  spec_version: '1.0'
+  file_name: data_files/9f5d864a-4571-4e54-a9d4-e2b375f411b8_bandpass353.csv
+  plot_file: plot_files/9f5d864a-4571-4e54-a9d4-e2b375f411b8_bandpass353.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 774833c9-f1a4-4b65-a7f7-e229bded5db9
+  name: bandpass545.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 2ef8c55c-4142-4222-9437-a74eaa420f0c
+  spec_version: '1.0'
+  file_name: data_files/774833c9-f1a4-4b65-a7f7-e229bded5db9_bandpass545.csv
+  plot_file: plot_files/774833c9-f1a4-4b65-a7f7-e229bded5db9_bandpass545.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: c4406dfc-2e09-4222-a6e3-82bfe7e82c31
+  name: bandpass857.csv
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 78fc3de4-7007-4c67-8cbf-1b2535315e98
+  spec_version: '1.0'
+  file_name: data_files/c4406dfc-2e09-4222-a6e3-82bfe7e82c31_bandpass857.csv
+  plot_file: plot_files/c4406dfc-2e09-4222-a6e3-82bfe7e82c31_bandpass857.csv.svg
+  plot_mime_type: image/svg+xml
+  dependencies: []
+- uuid: 502564ba-c668-4070-8333-d2ecebd0732d
+  name: file
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: c20f4b61-0162-4316-8d8e-d768287123e1
+  spec_version: '1.0'
+  metadata:
+    '030':
+      frequency: '030'
+      fwhm: 33.158732145
+      noise: 0.0001484749
+      centralfreq: 28.3999996185
+      fwhm_eff: 32.2389984131
+      fwhm_eff_sigma: 0.0130000003
+      ellipticity_eff: 1.3200000525
+      ellipticity_eff_sigma: 0.0309999995
+      solid_angle_eff: 1189.5129394531
+      solid_angle_eff_sigma: 0.8420000076
+    '044':
+      frequency: '044'
+      fwhm: 28.08523439
+      noise: 0.0001731797
+      centralfreq: 44.0999984741
+      fwhm_eff: 27.0049991608
+      fwhm_eff_sigma: 0.5519999862
+      ellipticity_eff: 1.0340000391
+      ellipticity_eff_sigma: 0.0329999998
+      solid_angle_eff: 832.9459838867
+      solid_angle_eff_sigma: 31.7740001678
+    '070':
+      frequency: '070'
+      fwhm: 13.08124258
+      noise: 0.0001519046
+      centralfreq: 70.4000015259
+      fwhm_eff: 13.251999855
+      fwhm_eff_sigma: 0.0329999998
+      ellipticity_eff: 1.2230000496
+      ellipticity_eff_sigma: 0.0260000005
+      solid_angle_eff: 200.7420043945
+      solid_angle_eff_sigma: 1.0269999504
+  dependencies: []
+- uuid: 7ec5b87b-2785-49c6-ba28-ebcb707ebe18
+  name: orbital_parameters.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 4e75f4f4-c48f-4dc0-9a56-45a74b2c2d34
+  spec_version: '1.0'
+  file_name: data_files/7ec5b87b-2785-49c6-ba28-ebcb707ebe18_orbital_parameters.xlsx
+  dependencies: []
+- uuid: 8f8ce974-da41-44b6-a888-843847704fd8
+  name: orbital_parameters.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 4e75f4f4-c48f-4dc0-9a56-45a74b2c2d34
+  spec_version: '1.0'
+  file_name: data_files/8f8ce974-da41-44b6-a888-843847704fd8_orbital_parameters.xlsx
+  dependencies: []
+- uuid: d4ec38a1-935c-4804-a733-aef2af8fd416
+  name: satellite-characteristics.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 15651785-e8a9-4924-92ee-f58747588e51
+  spec_version: '1.0'
+  file_name: data_files/d4ec38a1-935c-4804-a733-aef2af8fd416_satellite-characteristics.xlsx
+  dependencies: []
+- uuid: f893bd42-3bb3-446b-a3af-b931b6466618
+  name: satellite-characteristics.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 15651785-e8a9-4924-92ee-f58747588e51
+  spec_version: '1.0'
+  file_name: data_files/f893bd42-3bb3-446b-a3af-b931b6466618_satellite-characteristics.xlsx
+  dependencies: []
+- uuid: 1a831850-8689-4a32-9c34-15da90b17a8d
+  name: telescope-characteristics.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 19e0c140-6140-4b49-bd0b-364f434f5bfc
+  spec_version: '1.0'
+  file_name: data_files/1a831850-8689-4a32-9c34-15da90b17a8d_telescope-characteristics.xlsx
+  dependencies: []
+- uuid: b35cc4a5-0628-4f8c-a008-e33062b8dc52
+  name: telescope-characteristics.xlsx
+  upload_date: '2013-03-11 00:00:00+00:00'
+  quantity: 19e0c140-6140-4b49-bd0b-364f434f5bfc
+  spec_version: '1.0'
+  file_name: data_files/b35cc4a5-0628-4f8c-a008-e33062b8dc52_telescope-characteristics.xlsx
+  dependencies: []
+releases:
+- tag: planck2013
+  release_date: '2013-03-11 00:00:00+00:00'
+  comment: Instrument specification for the Planck 2013 data release
+  data_files:
+  - 6ce7a340-026f-4d14-ac14-95fc8eaaa8f2
+  - 7046b7b9-618b-45b2-9701-c49fc9ac1462
+  - 26b25ee4-699d-4c91-b7a7-3e008ff0a709
+  - 9d8c92ec-75ca-4331-9c52-0a57c01e6eaa
+  - 75dee1ae-073b-43bd-8ac2-f147ff749ebe
+  - d85fb364-56a2-4745-8139-a117d64d47f4
+  - 9f5d864a-4571-4e54-a9d4-e2b375f411b8
+  - 774833c9-f1a4-4b65-a7f7-e229bded5db9
+  - c4406dfc-2e09-4222-a6e3-82bfe7e82c31
+  - 502564ba-c668-4070-8333-d2ecebd0732d
+  - 7ec5b87b-2785-49c6-ba28-ebcb707ebe18
+  - f893bd42-3bb3-446b-a3af-b931b6466618
+  - b35cc4a5-0628-4f8c-a008-e33062b8dc52
+  release_document_mime_type: text/plain
+  release_document: release_documents/planck2013.txt
+- tag: planck2018
+  release_date: '2017-09-26 00:00:00+00:00'
+  comment: Instrument specification for the Planck 2018 data release
+  data_files:
+  - 460024bb-5425-4e2d-bb41-aae7a46be20b
+  - 205dcd9e-f2bc-44b6-9b4d-a41b7ba42e76
+  - 90ceeaca-9b4b-48bf-86c8-6c5bff0cad7f
+  - c6eb142e-abfe-4783-ac93-84f330624ff1
+  - 8237f6b7-0974-4221-9efb-9079eaecb4c2
+  - 3a29d860-2289-4691-82de-1fcb4adfff0e
+  - 3a514926-ea2e-4e69-996e-2eedc2894a1c
+  - 43638c42-e42c-49c0-8ee3-09218f5fa73c
+  - f7248286-5c1d-481a-af34-50ecd4787935
+  - c19c83d5-34cf-4c94-8bf5-3158422de7f0
+  - ff8374ac-c347-4924-bf73-dc05d28c0ed3
+  - 24b9660c-b1a5-491e-916c-b9459219543e
+  - 43514e4a-bc6b-4a16-95f9-f1bc69f2e9cc
+  - 18190c40-d4dc-40cc-8d8f-959dc1c1cac0
+  - '02815676-74a9-4162-90a8-8949cdb19b95'
+  - 2f56c103-589a-4119-86b3-c1a0b9b1dcac
+  - b9b97cea-b57b-4daa-b523-3678eac839a1
+  - a78a19cc-8043-4beb-a6f1-1ee4e59dd45b
+  - c789e9c1-ac22-42bd-a518-322f418dc5ff
+  - 9de8972a-de9f-49fc-af57-2858d21f3f38
+  - 896a6499-6bf0-445d-85db-b311c27afc9a
+  - 3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac
+  - d8c0754c-3399-4eee-ae0a-289717960b60
+  - c4a3d09d-56e5-49f2-8fb1-3f26d58f3175
+  - ae866452-107c-47f8-a506-59ed76777dc6
+  - 8d324497-1feb-4329-9db5-79fce23a3728
+  - 436505f3-573e-4c8c-93cb-e5260d1c62da
+  - ed8ef738-ef1e-474b-b867-646c74f89694
+  - 3de6342d-7688-4d9c-ae84-f1216ccad186
+  - 7bf01b19-3124-46b4-84b5-a6ecace72583
+  - fcd0b323-4d7b-406c-95a5-1337a96f611a
+  - 25109593-c5e2-4b60-b06e-ac5e6c3b7b83
+  - 87230a9f-70c7-4fa3-8843-834d52c9fd06
+  - 7ec5b87b-2785-49c6-ba28-ebcb707ebe18
+  - f893bd42-3bb3-446b-a3af-b931b6466618
+  - b35cc4a5-0628-4f8c-a008-e33062b8dc52
+  release_document_mime_type: text/plain
+  release_document: release_documents/planck2018.txt
+
