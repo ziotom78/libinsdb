@@ -56,7 +56,7 @@ Once you have a working connection to the database, you can run queries using on
 Let's retrieve information about a data file::
 
     data_file = insdb.query_data_file(
-        "/releases/planck2021/LFI/frequency_030_ghz/bandpass"
+        "planck2021/LFI/frequency_030_ghz/bandpass"
     )
 
 The method returns a new instance of the :class:`.DataFile` class. If a real file is associated with the class, you can open it using the :meth:`.DataFile.open_data_file` method::
