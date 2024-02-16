@@ -56,9 +56,10 @@ Once you have a working connection to the database, you can run queries using on
 Let's retrieve information about a data file::
 
     data_file = insdb.query_data_file(
-        "planck2021/LFI/frequency_030_ghz/bandpass"
+        "/releases/planck2021/LFI/frequency_030_ghz/bandpass"
     )
 
+(The path we have used here is the one shown at the bottom of the page https://insdbdemo.fisica.unimi.it/browse/data_files/f155cb37-d12e-4645-952f-014086094613/.)
 The method returns a new instance of the :class:`.DataFile` class. If a real file is associated with the class, you can open it using the :meth:`.DataFile.open_data_file` method::
 
     with data_file.open_data_file(insdb) as my_file:
@@ -72,7 +73,7 @@ Remember that the file is always opened in binary mode; thus, if you know it is 
 Modifying the content of the database
 -------------------------------------
 
-If you are accessing a local copy of the database, only read-only operations are enabled. However, if you instantiate an object of type :class:`.RemoteInsDb`, then additional methods are available with respect to :class:`.LocalInsDb`:
+If you are accessing a local copy of the database, only read-only operations are enabled. However, if you instantiate an object of type :class:`.RemoteInsDb` and your user has the proper access rights, then additional methods are available with respect to :class:`.LocalInsDb`:
 
 - :meth:`.RemoteInsDb.patch` lets you to change any object in the database, be it a specification document, a data file, a quantity, etc.
 - :meth:`.RemoteInsDb.delete` lets you to remove any object in the database.
@@ -150,4 +151,5 @@ These instructions can be combined in a script so that a full tree of entities/q
 A real-world case
 -----------------
 
-The website https://insdbdemo.fisica.unimi.it shows a demo of InstrumentDB hosting a reduced instrument model of the ESA Planck spacecraft. The code used to fill the database is available at https://github.com/ziotom78/planck_insdb_demo and can be used as a reference to use Libinsdb in a real-world scenario.
+The website https://insdbdemo.fisica.unimi.it shows a demo of InstrumentDB hosting a reduced instrument model of the ESA Planck spacecraft.
+The code used to fill the database is available at https://github.com/ziotom78/fill_insdb_with_planck_rimo and can be used as a reference to use Libinsdb in a real-world scenario.
