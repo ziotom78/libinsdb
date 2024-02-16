@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.7.0
+
 -   Be more tolerant with `/releases/` in data file paths [#8](https://github.com/ziotom78/libinsdb/pull/8)
 
 # Version 0.6.0
