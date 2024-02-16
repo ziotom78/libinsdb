@@ -246,9 +246,13 @@ class RemoteInsDb(InstrumentDatabase):
             uuid = UUID(identifier)
             return self._query_data_file_from_uuid(uuid, track=track)
         except ValueError:
+            full_identifier = identifier
+            if not full_identifier.startswith("/releases/"):
+                full_identifier = f"/releases/{identifier}"
+
             # `identifier` is a path into the tree
             response = requests.get(
-                urljoin(self.server_address, f"/releases/{identifier}/"),
+                urljoin(self.server_address, full_identifier),
                 headers=self.auth_header,
             )
             self._validate_response(response)
