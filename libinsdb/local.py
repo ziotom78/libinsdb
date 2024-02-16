@@ -389,8 +389,10 @@ class LocalInsDb(InstrumentDatabase):
             except ValueError:
                 # We're dealing with a path
                 stripped_identifier = identifier.removeprefix("/releases/")
-                    
-                relname, entity_path, quantity_name = _parse_data_file_path(stripped_identifier)
+
+                relname, entity_path, quantity_name = _parse_data_file_path(
+                    stripped_identifier
+                )
                 print(f"DEBUG: {identifier=}, {stripped_identifier=}, {relname=}")
                 release_uuids = self.releases[relname].data_files
                 entity = self.entities[self.path_to_entity[entity_path]]
