@@ -59,7 +59,13 @@ Let's retrieve information about a data file::
         "/releases/planck2021/LFI/frequency_030_ghz/bandpass"
     )
 
-(The path we have used here is the one shown at the bottom of the page https://insdbdemo.fisica.unimi.it/browse/data_files/f155cb37-d12e-4645-952f-014086094613/.)
+The path we have used here is the one shown at the bottom of the page https://insdbdemo.fisica.unimi.it/browse/data_files/f155cb37-d12e-4645-952f-014086094613/, as shown in this image:
+
+.. figure:: images/insdb_path_location_border.png
+   :class: with-border
+
+   Location of the path to be used in calls to :meth:`.InstrumentDatabase.query_data_file`.
+
 The method returns a new instance of the :class:`.DataFile` class. If a real file is associated with the class, you can open it using the :meth:`.DataFile.open_data_file` method::
 
     with data_file.open_data_file(insdb) as my_file:
