@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.7.1
+
 -   Fix an authentication problem with data files [#10](https://github.com/ziotom78/libinsdb/pull/10)
 
 # Version 0.7.0
