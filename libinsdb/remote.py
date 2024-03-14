@@ -210,7 +210,7 @@ class RemoteInsDb(InstrumentDatabase):
             upload_date=data_file_info["upload_date"],
             metadata=parsed_metadata,
             data_file_local_path=None,
-            data_file_download_url=data_file_info["download_link"],
+            data_file_download_url=data_file_info.get("download_link", None),
             quantity=uuid_from_url(data_file_info["quantity"]),
             spec_version=data_file_info["spec_version"],
             dependencies=set(
@@ -284,7 +284,9 @@ class RemoteInsDb(InstrumentDatabase):
 
         f = TemporaryFile("w+b")
         response = requests.get(
-            str(data_file.data_file_download_url), allow_redirects=True
+            str(data_file.data_file_download_url),
+            allow_redirects=True,
+            headers=self.auth_header,
         )
         f.write(response.content)
         f.seek(0)
