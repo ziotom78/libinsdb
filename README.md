@@ -4,6 +4,8 @@ A library to interface Python scripts with an [InstrumentDB](https://github.com/
 
 ## Documentation
 
+A tutorial is avilable on [Google Colab](https://colab.research.google.com/drive/1GRCssFs_lGfku1DLvvEowW4fTKUSsLK6?usp=sharing).
+
 The manual is available at <https://libinsdb.readthedocs.io/en/latest/>.
 
 To build a copy of the documentation locally, run
