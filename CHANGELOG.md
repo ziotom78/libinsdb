@@ -1,5 +1,7 @@
 # HEAD
 
+-   Add a link to a tutorial Jupyter notebook hosted on Google Colab [#11](https://github.com/ziotom78/libinsdb/pull/11)
+
 # Version 0.7.2
 
 -   Remove spurious DEBUG statement [e152872](https://github.com/ziotom78/libinsdb/commit/e1528724bdd8b06509b438d6297fdc19127483e9)

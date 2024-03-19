@@ -1,6 +1,8 @@
 Tutorial
 ========
 
+There is a Jupyter notebook available using [Google Colab](https://colab.research.google.com/drive/1GRCssFs_lGfku1DLvvEowW4fTKUSsLK6?usp=sharing), but we leave this page here to keep old URL links working. New users are advised to refer to the Jupyer notebook.
+
 In this tutorial, we will see how Libinsdb can be used to access the contents of an instance of `InstrumentDB <https://github.com/ziotom78/instrumentdb>`_. We will make use of the demo site https://insdbdemo.fisica.unimi.it, which is an instance of InstrumentDB containing a reduced set of information related to the `ESA Planck spacecraft <https://www.esa.int/Science_Exploration/Space_Science/Planck>`_.
 
 Creating a virtual environnment
