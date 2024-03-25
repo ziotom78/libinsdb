@@ -117,7 +117,10 @@ def test_schema_formats():
         "mock_db_json_gz",
         "mock_db_yaml",
         "mock_db_yaml_gz",
+        Path("mock_db_json") / "schema.json",
+        Path("mock_db_json_gz") / "schema.json.gz",
     ]:
+        print(f"Testing {folder_name}")
         mock_db_path = Path(__file__).parent / folder_name
         db = LocalInsDb(storage_path=mock_db_path)
 
