@@ -217,6 +217,17 @@ class LocalInsDb(InstrumentDatabase):
 
     This class assumes that the storage is read-only: no change in the files
     is ever done!
+
+    The only argument necessary to build this class is the path to the location
+    where the database is located. You can either specify the folder that
+    contains the ``schema.json`` file and all the other files exported from
+    an InstrumentDB instance, or the full path to the JSON file containing the
+    schema.
+
+    It is *not* necessary that all the ancillary data are immediately available
+    to create a :class:`.LocalInsDb` instance: just the JSON file containing the
+    schema is read on the spot. Of course, if you do not have anything else than
+    the JSON schema, you cannot call methods like :meth:`.query_data_file`.
     """
 
     def __init__(self, storage_path: Union[str, Path]):
@@ -407,6 +418,13 @@ class LocalInsDb(InstrumentDatabase):
            case, the path has the following form:
 
            /relname/sequence/of/entities/…/quantity
+
+        You can check if your local copy of the database contains data files at all
+        through the Boolean variable `are_data_files_available`::
+
+            db = LocalInsDb(SOME_PATH)
+            if not db.are_data_files_available:
+                print("Error, you only have the JSON schema file!")
 
         """
 
