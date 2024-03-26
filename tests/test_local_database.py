@@ -117,8 +117,8 @@ def test_schema_formats():
         "mock_db_json_gz",
         "mock_db_yaml",
         "mock_db_yaml_gz",
-        Path("mock_db_json") / "schema.json",
-        Path("mock_db_json_gz") / "schema.json.gz",
+        Path("mock_db_json") / "schema.json",  # Explicit file name
+        Path("mock_db_json_gz") / "schema.json.gz",  # Explicit file name
     ]:
         print(f"Testing {folder_name}")
         mock_db_path = Path(__file__).parent / folder_name
@@ -130,6 +130,30 @@ def test_schema_formats():
 
         # Check that the parent is the "frequency_030_ghz" entity
         assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")
+
+
+def test_uncommon_schema_name():
+    path = Path(__file__).parent / "mock_db_json_3" / "really_weird_name.json"
+    db = LocalInsDb(storage_path=path)
+    assert db.storage_path == path.parent
+
+
+def test_missing_data_files():
+    mock_db_path = Path(__file__).parent / "mock_db_json"
+    db = LocalInsDb(storage_path=mock_db_path)
+    # This folder does contain data files…
+    assert db.are_data_files_available
+
+    mock_db_path = Path(__file__).parent / "mock_db_json_2"
+    db = LocalInsDb(storage_path=mock_db_path)
+    # … but this folder does not
+    assert not db.are_data_files_available
+
+    # Check that the correct assertion is raised
+    from libinsdb import InstrumentDbFormatError
+
+    with pytest.raises(InstrumentDbFormatError):
+        db.query_data_file(UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac"))
 
 
 def test_merge():
