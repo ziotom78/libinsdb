@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.7.3
+
 -   Let the user specify the schema file name in `LocalInsDb` [#14](https://github.com/ziotom78/libinsdb/pull/14)
 
 -   Add a link to a tutorial Jupyter notebook hosted on Google Colab [#11](https://github.com/ziotom78/libinsdb/pull/11)
