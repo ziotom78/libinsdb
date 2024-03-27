@@ -17,23 +17,43 @@ from .instrumentdb import InstrumentDatabase
 
 
 def _read_json(path: Path):
-    with path.open("rt") as inpf:
-        return json.load(inpf)
+    try:
+        with path.open("rt") as inpf:
+            return json.load(inpf)
+    except json.JSONDecodeError as err:
+        raise InstrumentDbFormatError(f"Invalid JSON schema: {err}")
 
 
 def _read_json_gz(path: Path):
-    with gzip.open(path, "rt") as inpf:
-        return json.load(inpf)
+    try:
+        with gzip.open(path, "rt") as inpf:
+            return json.load(inpf)
+    except json.JSONDecodeError as err:
+        raise InstrumentDbFormatError(f"Invalid gzipped JSON schema: {err}")
+    except gzip.BadGzipFile as err:
+        raise InstrumentDbFormatError(f"Invalid gzipped file: {err}")
 
 
 def _read_yaml(path: Path):
-    with path.open("rt") as inpf:
-        return yaml.safe_load(inpf)
+    from yaml.scanner import ScannerError
+
+    try:
+        with path.open("rt") as inpf:
+            return yaml.safe_load(inpf)
+    except ScannerError as err:
+        raise InstrumentDbFormatError(f"Invalid YAML schema: {err}")
 
 
 def _read_yaml_gz(path: Path):
-    with gzip.open(path, "rt") as inpf:
-        return yaml.safe_load(inpf)
+    from yaml.scanner import ScannerError
+
+    try:
+        with gzip.open(path, "rt") as inpf:
+            return yaml.safe_load(inpf)
+    except ScannerError as err:
+        raise InstrumentDbFormatError(f"Invalid YAML schema: {err}")
+    except gzip.BadGzipFile as err:
+        raise InstrumentDbFormatError(f"Invalid gzipped file: {err}")
 
 
 _DB_FLATFILE_SCHEMA_FILE_NAME = "schema"
@@ -197,12 +217,30 @@ class LocalInsDb(InstrumentDatabase):
 
     This class assumes that the storage is read-only: no change in the files
     is ever done!
+
+    The only argument necessary to build this class is the path to the location
+    where the database is located. You can either specify the folder that
+    contains the ``schema.json`` file and all the other files exported from
+    an InstrumentDB instance, or the full path to the JSON file containing the
+    schema.
+
+    It is *not* necessary that all the ancillary data are immediately available
+    to create a :class:`.LocalInsDb` instance: just the JSON file containing the
+    schema is read on the spot. Of course, if you do not have anything else than
+    the JSON schema, you cannot call methods like :meth:`.query_data_file`.
     """
 
     def __init__(self, storage_path: Union[str, Path]):
         super().__init__()
 
         self.storage_path = Path(storage_path)
+        self.schema_file_name = ""  # It will be initialized by self.check_consistency()
+        self.are_data_files_available = (
+            False  # It will be initialized by self.read_schema()
+        )
+        self.file_parser = (
+            _read_json  # It will be initialized by self.check_consistency()
+        )
 
         self.format_specs = {}  # type: dict[UUID, FormatSpecification]
         self.entities = {}  # type: dict[UUID, Entity]
@@ -227,18 +265,26 @@ class LocalInsDb(InstrumentDatabase):
         """
 
         found = False
-
-        for cur_ext, _ in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
-            schema_file_path = self.storage_path / (
-                _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
-            )
-            if schema_file_path.exists():
-                found = True
-                break
+        if self.storage_path.is_file():
+            path = self.storage_path
+            self.schema_file_name = path.name
+            for cur_ext, _ in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
+                self.schema_file_name = self.schema_file_name.removesuffix(cur_ext)
+            self.storage_path = path.parent
+            found = True
+        else:
+            for cur_ext, _ in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
+                schema_file_path = self.storage_path / (
+                    _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
+                )
+                if schema_file_path.exists():
+                    found = True
+                    self.schema_file_name = _DB_FLATFILE_SCHEMA_FILE_NAME
+                    break
 
         if not found:
             raise InstrumentDbFormatError(
-                ("no valid schema file found " 'in "{path}"').format(
+                ('no valid schema file found in "{path}"').format(
                     path=self.storage_path.absolute()
                 )
             )
@@ -253,9 +299,7 @@ class LocalInsDb(InstrumentDatabase):
 
         schema = None
         for cur_ext, cur_parser in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
-            schema_file_path = self.storage_path / (
-                _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
-            )
+            schema_file_path = self.storage_path / (self.schema_file_name + cur_ext)
             try:
                 schema = cur_parser(schema_file_path)
             except FileNotFoundError:
@@ -263,10 +307,13 @@ class LocalInsDb(InstrumentDatabase):
 
         if not schema:
             raise InstrumentDbFormatError(
-                ("no valid schema file found " 'in "{path}"').format(
+                ('no valid schema file found in "{path}"').format(
                     path=self.storage_path.absolute()
                 )
             )
+
+        data_files_path = self.storage_path / "data_files"
+        self.are_data_files_available = data_files_path.exists()
 
         self.parse_schema(schema)
 
@@ -372,7 +419,33 @@ class LocalInsDb(InstrumentDatabase):
 
            /relname/sequence/of/entities/…/quantity
 
+        You can check if your local copy of the database contains data files at all
+        through the Boolean variable `are_data_files_available`::
+
+            db = LocalInsDb(SOME_PATH)
+            if not db.are_data_files_available:
+                print("Error, you only have the JSON schema file!")
+
         """
+
+        # In principle, we should implement this test for all the files available
+        # (format specifications, release notes, plot files…). However:
+        # 1. If the user asks to load missing files, an exception will be raised correctly
+        # 2. The most likely file a user wants is a data file, so we just provide a helpful
+        #    hint about what's wrong in this case, with the hope that whoever is downloading
+        #    any other file using the RESTful interface is expert enough to figure out what's
+        #    wrong.
+        if not self.are_data_files_available:
+            # Data files were not available when this LocalInsDb object was created
+            # but maybe now they are present. Let's check it again
+            are_available_now = self.storage_path / "data_files"
+            if not are_available_now.exists():
+                raise InstrumentDbFormatError(
+                    "You do not seem to have downloaded data files, only the schema file"
+                )
+            else:
+                self.are_data_files_available = True
+
         if isinstance(identifier, UUID):
             if track:
                 self.add_uuid_to_tracked_list(uuid=identifier)
