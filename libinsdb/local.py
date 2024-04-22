@@ -428,24 +428,6 @@ class LocalInsDb(InstrumentDatabase):
 
         """
 
-        # In principle, we should implement this test for all the files available
-        # (format specifications, release notes, plot files…). However:
-        # 1. If the user asks to load missing files, an exception will be raised correctly
-        # 2. The most likely file a user wants is a data file, so we just provide a helpful
-        #    hint about what's wrong in this case, with the hope that whoever is downloading
-        #    any other file using the RESTful interface is expert enough to figure out what's
-        #    wrong.
-        if not self.are_data_files_available:
-            # Data files were not available when this LocalInsDb object was created
-            # but maybe now they are present. Let's check it again
-            are_available_now = self.storage_path / "data_files"
-            if not are_available_now.exists():
-                raise InstrumentDbFormatError(
-                    "You do not seem to have downloaded data files, only the schema file"
-                )
-            else:
-                self.are_data_files_available = True
-
         if isinstance(identifier, UUID):
             if track:
                 self.add_uuid_to_tracked_list(uuid=identifier)
@@ -517,6 +499,25 @@ class LocalInsDb(InstrumentDatabase):
 
     def open_data_file(self, data_file: DataFile) -> IO:
         assert data_file.data_file_local_path is not None
+
+        # In principle, we should implement this test for all the files available
+        # (format specifications, release notes, plot files…). However:
+        # 1. If the user asks to load missing files, an exception will be raised correctly
+        # 2. The most likely file a user wants is a data file, so we just provide a helpful
+        #    hint about what's wrong in this case, with the hope that whoever is downloading
+        #    any other file using the RESTful interface is expert enough to figure out what's
+        #    wrong.
+        if not self.are_data_files_available:
+            # Data files were not available when this LocalInsDb object was created
+            # but maybe now they are present. Let's check it again
+            are_available_now = self.storage_path / "data_files"
+            if not are_available_now.exists():
+                raise InstrumentDbFormatError(
+                    "You do not seem to have downloaded data files, only the schema file"
+                )
+            else:
+                self.are_data_files_available = True
+
         return data_file.data_file_local_path.open("rb")
 
     def merge(self, other: "LocalInsDb") -> None:
