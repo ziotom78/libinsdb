@@ -144,7 +144,7 @@ def test_missing_data_files():
     # This folder does contain data files…
     assert db.are_data_files_available
 
-    mock_db_path = Path(__file__).parent / "mock_db_json_2"
+    mock_db_path = Path(__file__).parent / "mock_db_json_3" / "really_weird_name.json"
     db = LocalInsDb(storage_path=mock_db_path)
     # … but this folder does not
     assert not db.are_data_files_available
@@ -152,8 +152,11 @@ def test_missing_data_files():
     # Check that the correct assertion is raised
     from libinsdb import InstrumentDbFormatError
 
+    data_file = db.query_data_file(UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac"))
     with pytest.raises(InstrumentDbFormatError):
-        db.query_data_file(UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac"))
+        with data_file.open_data_file(db):
+            # This instruction should never be executed
+            pass
 
 
 def test_merge():
