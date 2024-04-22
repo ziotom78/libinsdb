@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libinsdb"
-version = "0.7.3"
+version = "0.7.4"
 description = "Library to access InstrumentDB databases"
 authors = ["Maurizio Tomasi <maurizio.tomasi@unimi.it>"]
 license = "MIT"

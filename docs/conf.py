@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "Libinsdb"
 copyright = "2023, Maurizio Tomasi"
 author = "Maurizio Tomasi"
-release = "0.7.3"
+release = "0.7.4"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

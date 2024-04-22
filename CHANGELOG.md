@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.7.4
+
 -   Fix a bug that caused errors even when accessing metadata in JSON files, if data files were not present [#16](https://github.com/ziotom78/libinsdb/pull/16)
 
 # Version 0.7.3

@@ -4,7 +4,7 @@ from .objects import FormatSpecification, Entity, Quantity, DataFile, Release
 from .local import LocalInsDb, InstrumentDbFormatError
 from .remote import RemoteInsDb, InstrumentDbConnectionError
 
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 
 __all__ = [
     "FormatSpecification",
