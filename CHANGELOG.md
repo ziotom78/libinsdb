@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.8.0
+
 -   Drop support for Python 3.8 and add support for Python 3.12 [#17](https://github.com/ziotom78/libinsdb/pull/17)
 
 # Version 0.7.4
