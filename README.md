@@ -10,10 +10,10 @@ The manual is available at <https://libinsdb.readthedocs.io/en/latest/>.
 
 To build a copy of the documentation locally, run
 
-    poetry install --with docs
+    uv install --with docs
 
 to install the additional dependencies needed to update the documentation and then run
 
-    poetry run make -C docs html
+    uv run make -C docs html
 
 The index will be available in the folder `docs/_build/html/`.
