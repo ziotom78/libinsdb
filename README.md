@@ -1,5 +1,13 @@
 # Libinsdb
 
+[![CI](https://github.com/ziotom78/libinsdb/actions/workflows/tests.yml/badge.svg)](https://github.com/ziotom78/libinsdb/actions/workflows/tests.yml)
+[![Documentation Status](https://readthedocs.org/projects/libinsdb/badge/?version=latest)](https://libinsdb.readthedocs.io/en/latest/)
+[![PyPI version](https://img.shields.io/pypi/v/libinsdb.svg)](https://pypi.org/project/libinsdb/)
+[![Python versions](https://img.shields.io/pypi/pyversions/libinsdb.svg)](https://pypi.org/project/libinsdb/)
+[![License](https://img.shields.io/pypi/l/libinsdb.svg)](https://github.com/ziotom78/libinsdb/blob/main/LICENSE)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-orange)](https://docs.astral.sh/ruff/)
+[![Checked with MyPy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
+
 A library to interface Python scripts with an [InstrumentDB](https://github.com/ziotom78/instrumentdb) database.
 
 ## Documentation
