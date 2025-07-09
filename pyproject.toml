@@ -16,6 +16,12 @@ dependencies = [
     "types-pyyaml>=6.0.12.12,<7",
 ]
 
+[project.optional-dependencies]
+# Be sure to keep this in sync with [dependency-groups] later
+docs = [
+  "sphinx>=7.1.2",
+]
+
 [dependency-groups]
 dev = [
     "ruff>=0.12.2",
@@ -25,7 +31,9 @@ dev = [
     "types-requests>=2.31.0.2,<3",
     "types-python-dateutil>=2.8.19.14,<3",
 ]
-docs = ["sphinx>=7.1.2"]
+docs = [
+    "sphinx>=7.1.2",
+]
 
 [tool.uv]
 default-groups = [
