@@ -1,43 +1,48 @@
-[tool.poetry]
+[project]
 name = "libinsdb"
 version = "0.8.0"
 description = "Library to access InstrumentDB databases"
-authors = ["Maurizio Tomasi <maurizio.tomasi@unimi.it>"]
-license = "MIT"
+authors = [{ name = "Maurizio Tomasi", email = "maurizio.tomasi@unimi.it" }]
+requires-python = ">=3.10, <4"
 readme = "README.md"
+license = "MIT"
+dependencies = [
+    "requests>=2.31.0,<3",
+    "tomlkit>=0.12.1,<0.13",
+    "requests-mock>=1.11.0,<2",
+    "coverage>=7.3.0,<8",
+    "python-dateutil>=2.8.2,<3",
+    "pyyaml>=6.0.1,<7",
+    "types-pyyaml>=6.0.12.12,<7",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-requests = "^2.31.0"
-tomlkit = "^0.12.1"
-requests-mock = "^1.11.0"
-coverage = "^7.3.0"
-python-dateutil = "^2.8.2"
-pyyaml = "^6.0.1"
-types-pyyaml = "^6.0.12.12"
+[dependency-groups]
+dev = [
+    "ruff>=0.12.2",
+    "mypy~=1.4",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+    "types-requests>=2.31.0.2,<3",
+    "types-python-dateutil>=2.8.19.14,<3",
+]
+docs = ["sphinx>=7.1.2"]
 
-[tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-flake8 = "^6.1.0"
-mypy = "^1.4"
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-types-requests = "^2.31.0.2"
-types-python-dateutil = "^2.8.19.14"
+[tool.uv]
+default-groups = [
+    "dev",
+    "docs",
+]
 
-[tool.poetry.group.docs]
-optional = true
+[tool.ruff]
+line-length = 120
 
-[tool.poetry.group.docs.dependencies]
-sphinx = ">=7.1.2"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-minversion = "7.4.0"
+minversion = "8.4.1"
 addopts = "-ra -q"
 testpaths = [
     "tests",
 ]
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
