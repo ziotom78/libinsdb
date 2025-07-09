@@ -50,9 +50,7 @@ def check_all_objects_in_db(insdb: InstrumentDatabase) -> None:
     assert isinstance(data_file3, DataFile)
     assert data_file3.uuid == UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
 
-    data_file4 = insdb.query_data_file(
-        "/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass/"
-    )
+    data_file4 = insdb.query_data_file("/releases/planck2018/LFI/frequency_044_ghz/24M/bandpass/")
     assert isinstance(data_file4, DataFile)
     assert data_file4.uuid == UUID("3ffd0d49-f06b-4c6a-9885-fb5b4f6db3ac")
 
@@ -124,7 +122,5 @@ def test_remotely(requests_mock):
         },
     )
 
-    insdb = RemoteInsDb(
-        server_address="http://localhost", username="test", password="12345"
-    )
+    insdb = RemoteInsDb(server_address="http://localhost", username="test", password="12345")
     check_all_objects_in_db(insdb)
