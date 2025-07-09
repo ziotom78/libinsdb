@@ -39,9 +39,7 @@ class InstrumentDatabase(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def query_data_file(
-        self, identifier: Union[str, UUID], track: bool = True
-    ) -> DataFile:
+    def query_data_file(self, identifier: Union[str, UUID], track: bool = True) -> DataFile:
         """Retrieve a data file
 
         The `identifier` parameter can be one of the following types:

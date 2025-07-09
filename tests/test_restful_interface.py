@@ -19,9 +19,7 @@ def create_mock_login(requests_mock, username: str, password: str) -> None:
             "token": "d5469e1b0287b28874c34863e7d54179e998758c",
             "token_expires_in_minutes": 15,
         },
-        additional_matcher=lambda request: match_authentication(
-            request, username="test", password="12345"
-        ),
+        additional_matcher=lambda request: match_authentication(request, username="test", password="12345"),
     )
 
 
@@ -51,9 +49,7 @@ def configure_mock_entity(requests_mock) -> None:
             "name": "27M",
             "parent": "http://localhost/api/entities/b3386894-40a3-4664-aaf6-f78d944943e2/",
             "children": [],
-            "quantities": [
-                "http://localhost/api/quantities/6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53/"
-            ],
+            "quantities": ["http://localhost/api/quantities/6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53/"],
         },
     )
 
@@ -303,9 +299,7 @@ def check_release(release: Release, tag: str) -> None:
         second=0,
         tzinfo=datetime.timezone.utc,
     )
-    assert (
-        release.comment == "Instrument specification for the Planck 2018 data release"
-    )
+    assert release.comment == "Instrument specification for the Planck 2018 data release"
     assert len(release.data_files) == 36
     assert UUID("25109593-c5e2-4b60-b06e-ac5e6c3b7b83") in release.data_files
 
@@ -345,10 +339,7 @@ def test_create_objects(requests_mock):
         json=entity_response,
     )
     root_entity = connection.create_entity(name="root")
-    assert (
-        root_entity
-        == "http://localhost/api/entities/5a25b116-784e-4013-8f60-2f31b4190ec3/"
-    )
+    assert root_entity == "http://localhost/api/entities/5a25b116-784e-4013-8f60-2f31b4190ec3/"
 
     requests_mock.get(
         "http://localhost/tree/root/",
@@ -366,10 +357,7 @@ def test_create_objects(requests_mock):
         },
     )
     sub_root_entity = connection.create_entity(name="sub_root", parent_path="root")
-    assert (
-        sub_root_entity
-        == "http://localhost/api/entities/44fc0e18-fbeb-4387-953c-68bfd11900e1/"
-    )
+    assert sub_root_entity == "http://localhost/api/entities/44fc0e18-fbeb-4387-953c-68bfd11900e1/"
 
     requests_mock.post(
         "http://localhost/api/format_specs/",
@@ -393,10 +381,7 @@ def test_create_objects(requests_mock):
         document_mime_type="text/plain",
         file_mime_type="text/csv",
     )
-    assert (
-        format_spec_url
-        == "http://localhost/api/format_specs/b19580f1-32dd-4a37-8366-97633324199e/"
-    )
+    assert format_spec_url == "http://localhost/api/format_specs/b19580f1-32dd-4a37-8366-97633324199e/"
 
     quantity_response = {
         "uuid": "01e9f145-0db9-4913-8a72-d7a2d58b4341",
@@ -410,13 +395,8 @@ def test_create_objects(requests_mock):
         "http://localhost/api/quantities/",
         json=quantity_response,
     )
-    quantity_url = connection.create_quantity(
-        name="quantity", parent_path="root", format_spec_url=format_spec_url
-    )
-    assert (
-        quantity_url
-        == "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/"
-    )
+    quantity_url = connection.create_quantity(name="quantity", parent_path="root", format_spec_url=format_spec_url)
+    assert quantity_url == "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/"
 
     requests_mock.get(
         "http://localhost/tree/root/quantity/",
@@ -443,10 +423,7 @@ def test_create_objects(requests_mock):
         },
     )
     data_file_url = connection.create_data_file(quantity="quantity", parent_path="root")
-    assert (
-        data_file_url
-        == "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
-    )
+    assert data_file_url == "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
 
     requests_mock.post(
         "http://localhost/api/data_files/",
@@ -459,9 +436,7 @@ def test_create_objects(requests_mock):
             "metadata": None,
             "quantity": "http://localhost/api/quantities/01e9f145-0db9-4913-8a72-d7a2d58b4341/",
             "spec_version": "1.0",
-            "dependencies": [
-                "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
-            ],
+            "dependencies": ["http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"],
             "plot_mime_type": None,
             "plot_file": None,
             "comment": "",
@@ -470,13 +445,8 @@ def test_create_objects(requests_mock):
             "plot_download_link": "http://localhost/browse/data_files/102ae614-1895-4fac-805d-2662de22085c/plot/",
         },
     )
-    data_file_url = connection.create_data_file(
-        quantity="quantity", parent_path="root", dependencies=[data_file_url]
-    )
-    assert (
-        data_file_url
-        == "http://localhost/api/data_files/102ae614-1895-4fac-805d-2662de22085c/"
-    )
+    data_file_url = connection.create_data_file(quantity="quantity", parent_path="root", dependencies=[data_file_url])
+    assert data_file_url == "http://localhost/api/data_files/102ae614-1895-4fac-805d-2662de22085c/"
 
     requests_mock.post(
         "http://localhost/api/releases/",
@@ -487,13 +457,9 @@ def test_create_objects(requests_mock):
             "comment": "",
             "release_document": None,
             "release_document_mime_type": "text/plain",
-            "data_files": [
-                "http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"
-            ],
+            "data_files": ["http://localhost/api/data_files/8db2fc11-1d28-44b2-9461-8c70c578dd6f/"],
             "json_dump": "http://localhost/browse/releases/rel1.0/download/",
         },
     )
-    release_url = connection.create_release(
-        release_tag="rel1.0", data_file_url_list=[data_file_url]
-    )
+    release_url = connection.create_release(release_tag="rel1.0", data_file_url_list=[data_file_url])
     assert release_url == "http://localhost/api/releases/rel1.0/"

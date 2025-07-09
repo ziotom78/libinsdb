@@ -218,7 +218,7 @@ class DataFile:
         uuid: UUID,
         name: str,
         upload_date: datetime,
-        metadata: dict[str, Any],
+        metadata: dict[str, Any] | None,
         data_file_local_path: Path | None,
         data_file_download_url: Path | None,
         quantity: UUID,
@@ -229,9 +229,9 @@ class DataFile:
         comment: str,
         release_tags: set[str] | None = None,
     ):
-        assert not (
-            (data_file_local_path is not None) and (data_file_download_url is not None)
-        ), "You cannot provide both 'data_file_local_path' and 'data_file_download_url'"
+        assert not ((data_file_local_path is not None) and (data_file_download_url is not None)), (
+            "You cannot provide both 'data_file_local_path' and 'data_file_download_url'"
+        )
         self.uuid = uuid
         self.name = name
         self.upload_date = upload_date
@@ -274,9 +274,7 @@ class Release:
 
     """
 
-    def __init__(
-        self, tag: str, rel_date: datetime, comment: str, data_files: set[UUID]
-    ):
+    def __init__(self, tag: str, rel_date: datetime, comment: str, data_files: set[UUID]):
         self.tag = tag
         self.rel_date = rel_date
         self.comment = comment

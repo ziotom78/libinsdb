@@ -36,10 +36,7 @@ class InstrumentDbConnectionError(Exception):
         self.message = message
 
     def __str__(self):
-        return (
-            f"HTTP error {self.http_code} from {self.url}: "
-            f"{self.message=}, {self.response=}"
-        )
+        return f"HTTP error {self.http_code} from {self.url}: {self.message=}, {self.response=}"
 
 
 def extract_last_part_from_url(url: str) -> str:
@@ -114,9 +111,7 @@ class RemoteInsDb(InstrumentDatabase):
         self._validate_response(response)
         self.auth_header = {"Authorization": "Token " + response.json()["token"]}
 
-    def _validate_response(
-        self, response: requests.Response, expected_http_code: int = 200
-    ):
+    def _validate_response(self, response: requests.Response, expected_http_code: int = 200):
         if response.status_code != expected_http_code:
             raise InstrumentDbConnectionError(response, message="Unable to log in")
 
@@ -213,15 +208,11 @@ class RemoteInsDb(InstrumentDatabase):
             data_file_download_url=data_file_info.get("download_link", None),
             quantity=uuid_from_url(data_file_info["quantity"]),
             spec_version=data_file_info["spec_version"],
-            dependencies=set(
-                [uuid_from_url(x) for x in data_file_info["dependencies"]]
-            ),
+            dependencies=set([uuid_from_url(x) for x in data_file_info["dependencies"]]),
             plot_file_local_path=None,
             plot_mime_type=data_file_info["plot_mime_type"],
             comment=data_file_info["comment"],
-            release_tags=set(
-                [extract_last_part_from_url(x) for x in data_file_info["release_tags"]]
-            ),
+            release_tags=set([extract_last_part_from_url(x) for x in data_file_info["release_tags"]]),
         )
 
     def _query_data_file_from_uuid(self, uuid: UUID, track: bool) -> DataFile:
@@ -236,9 +227,7 @@ class RemoteInsDb(InstrumentDatabase):
 
         return self._create_data_file_from_response(response)
 
-    def query_data_file(
-        self, identifier: Union[str, UUID], track: bool = True
-    ) -> DataFile:
+    def query_data_file(self, identifier: Union[str, UUID], track: bool = True) -> DataFile:
         if isinstance(identifier, UUID):
             return self._query_data_file_from_uuid(uuid=identifier, track=track)
 
@@ -293,9 +282,7 @@ class RemoteInsDb(InstrumentDatabase):
 
         return f
 
-    def post(
-        self, url: str, data: dict[str, Any], files: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    def post(self, url: str, data: dict[str, Any], files: dict[str, Any] | None = None) -> dict[str, Any]:
         """Send a POST request to the server
 
         This method should be used to create a *new* object in the database,
@@ -339,9 +326,7 @@ class RemoteInsDb(InstrumentDatabase):
         )
         return _validate_response_and_return_json(response)
 
-    def patch(
-        self, url: str, data: dict[str, Any], files: dict[str, Any] | None = None
-    ) -> dict[str, Any]:
+    def patch(self, url: str, data: dict[str, Any], files: dict[str, Any] | None = None) -> dict[str, Any]:
         """Send a PATCH request to the server
 
         This method should be used to modify an existing object in the database.
@@ -488,14 +473,12 @@ class RemoteInsDb(InstrumentDatabase):
 
         Return the URL of the new data file.
         """
-        assert not (
-            (plot_file is not None) and (plot_file_path is not None)
-        ), "you cannot specify both 'plot_file' and 'plot_file_path'"
+        assert not ((plot_file is not None) and (plot_file_path is not None)), (
+            "you cannot specify both 'plot_file' and 'plot_file_path'"
+        )
 
         parent_path = _normalize_relative_path(parent_path)
-        quantity_dict = self.get(
-            url=f"{self.server_address}/tree/{parent_path}/{quantity}"
-        )
+        quantity_dict = self.get(url=f"{self.server_address}/tree/{parent_path}/{quantity}")
         quantity_url = quantity_dict["url"]
 
         data = {

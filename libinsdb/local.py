@@ -156,9 +156,7 @@ def parse_data_file(storage_path: Path, obj_dict: dict[str, Any]) -> DataFile:
         name=obj_dict.get("name", ""),
         upload_date=parser.isoparse(obj_dict["upload_date"]),
         metadata=obj_dict.get("metadata", None),
-        data_file_local_path=storage_path / file_name
-        if file_name is not None
-        else None,
+        data_file_local_path=storage_path / file_name if file_name is not None else None,
         data_file_download_url=None,
         quantity=UUID(obj_dict["quantity"]),
         spec_version=obj_dict.get("spec_version", ""),
@@ -235,12 +233,8 @@ class LocalInsDb(InstrumentDatabase):
 
         self.storage_path = Path(storage_path)
         self.schema_file_name = ""  # It will be initialized by self.check_consistency()
-        self.are_data_files_available = (
-            False  # It will be initialized by self.read_schema()
-        )
-        self.file_parser = (
-            _read_json  # It will be initialized by self.check_consistency()
-        )
+        self.are_data_files_available = False  # It will be initialized by self.read_schema()
+        self.file_parser = _read_json  # It will be initialized by self.check_consistency()
 
         self.format_specs = {}  # type: dict[UUID, FormatSpecification]
         self.entities = {}  # type: dict[UUID, Entity]
@@ -274,9 +268,7 @@ class LocalInsDb(InstrumentDatabase):
             found = True
         else:
             for cur_ext, _ in _DB_FLATFILE_SCHEMA_FILE_EXTENSIONS:
-                schema_file_path = self.storage_path / (
-                    _DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext
-                )
+                schema_file_path = self.storage_path / (_DB_FLATFILE_SCHEMA_FILE_NAME + cur_ext)
                 if schema_file_path.exists():
                     found = True
                     self.schema_file_name = _DB_FLATFILE_SCHEMA_FILE_NAME
@@ -284,9 +276,7 @@ class LocalInsDb(InstrumentDatabase):
 
         if not found:
             raise InstrumentDbFormatError(
-                ('no valid schema file found in "{path}"').format(
-                    path=self.storage_path.absolute()
-                )
+                ('no valid schema file found in "{path}"').format(path=self.storage_path.absolute())
             )
 
     def read_schema(self) -> None:
@@ -307,9 +297,7 @@ class LocalInsDb(InstrumentDatabase):
 
         if not schema:
             raise InstrumentDbFormatError(
-                ('no valid schema file found in "{path}"').format(
-                    path=self.storage_path.absolute()
-                )
+                ('no valid schema file found in "{path}"').format(path=self.storage_path.absolute())
             )
 
         data_files_path = self.storage_path / "data_files"
@@ -333,9 +321,7 @@ class LocalInsDb(InstrumentDatabase):
 
         self.data_files = {}
         for obj_dict in schema.get("data_files", []):
-            cur_data_file = parse_data_file(
-                storage_path=self.storage_path, obj_dict=obj_dict
-            )
+            cur_data_file = parse_data_file(storage_path=self.storage_path, obj_dict=obj_dict)
             self.data_files[cur_data_file.uuid] = cur_data_file
 
         self.releases = {}
@@ -349,10 +335,7 @@ class LocalInsDb(InstrumentDatabase):
             assert entity.full_path is not None
             self.path_to_entity[entity.full_path] = uuid
 
-        self.path_to_quantity = {
-            self.quantity_path(quantity.uuid): uuid
-            for uuid, quantity in self.quantities.items()
-        }
+        self.path_to_quantity = {self.quantity_path(quantity.uuid): uuid for uuid, quantity in self.quantities.items()}
 
         for cur_uuid, cur_quantity in self.quantities.items():
             if cur_quantity.entity:
@@ -403,9 +386,7 @@ class LocalInsDb(InstrumentDatabase):
                 if cur_quantity.name == quantity_name:
                     return cur_quantity
 
-            raise KeyError(
-                f'quantity "{quantity_name}" not found for entity "{entity_path}"'
-            )
+            raise KeyError(f'quantity "{quantity_name}" not found for entity "{entity_path}"')
 
     def query_data_file(self, identifier: str | UUID, track: bool = True) -> DataFile:
         """Retrieve a data file
@@ -445,9 +426,7 @@ class LocalInsDb(InstrumentDatabase):
                 # We're dealing with a path
                 stripped_identifier = identifier.removeprefix("/releases/")
 
-                relname, entity_path, quantity_name = _parse_data_file_path(
-                    stripped_identifier
-                )
+                relname, entity_path, quantity_name = _parse_data_file_path(stripped_identifier)
                 release_uuids = self.releases[relname].data_files
                 entity = self.entities[self.path_to_entity[entity_path]]
 
@@ -466,9 +445,7 @@ class LocalInsDb(InstrumentDatabase):
                             'wrong path: "{id}" points to entity '
                             '"{path}", which does not have a quantity '
                             'named "{quantity}"'
-                        ).format(
-                            id=identifier, path=entity.full_path, quantity=quantity_name
-                        )
+                        ).format(id=identifier, path=entity.full_path, quantity=quantity_name)
                     )
 
                 # Now check which data file has a UUID that matches
@@ -512,9 +489,7 @@ class LocalInsDb(InstrumentDatabase):
             # but maybe now they are present. Let's check it again
             are_available_now = self.storage_path / "data_files"
             if not are_available_now.exists():
-                raise InstrumentDbFormatError(
-                    "You do not seem to have downloaded data files, only the schema file"
-                )
+                raise InstrumentDbFormatError("You do not seem to have downloaded data files, only the schema file")
             else:
                 self.are_data_files_available = True
 
