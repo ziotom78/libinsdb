@@ -127,10 +127,13 @@ class InstrumentDatabase(ABC):
 
         cur_entity_uuid = entity_uuid
         chain_of_names = []  # typing: list[str]
-        while cur_entity_uuid:
+        while True:
             cur_entity = self.query_entity(cur_entity_uuid)
             chain_of_names.append(cur_entity.name)
-            cur_entity_uuid = cur_entity.parent
+            if cur_entity.parent:
+                cur_entity_uuid = cur_entity.parent
+            else:
+                break
 
         chain_of_names.reverse()
         return "/".join(chain_of_names)
