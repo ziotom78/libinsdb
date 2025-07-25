@@ -71,9 +71,11 @@ def test_get_queried_objects():
 
     entity_uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     _ = db.query(f"/entities/{entity_uuid}")
+    assert db.get_path_for_entity(entity_uuid) == "LFI/frequency_030_ghz/27M"
 
     quantity_uuid = UUID("6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53")
     _ = db.query(f"/quantities/{quantity_uuid}")
+    assert db.get_path_for_quantity(quantity_uuid) == "LFI/frequency_030_ghz/27M/bandpass"
 
     # This is not being tracked…
     untracked_data_file_uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
