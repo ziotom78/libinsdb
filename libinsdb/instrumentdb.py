@@ -116,3 +116,32 @@ class InstrumentDatabase(ABC):
         This is meant to be used as a context-manager.
         """
         raise NotImplementedError()
+
+    def get_path_for_entity(self, entity_uuid: UUID) -> str:
+        """Return the path to an entity given its UUID
+
+        Return a string containing a POSIX-like path that lists the
+        sequence of entities to traverse before reaching the entity
+        with the specified UUID.
+        """
+
+        cur_entity_uuid = entity_uuid
+        chain_of_names = []  # typing: list[str]
+        while cur_entity_uuid:
+            cur_entity = self.query_entity(cur_entity_uuid)
+            chain_of_names.append(cur_entity.name)
+            cur_entity_uuid = cur_entity.parent
+
+        chain_of_names.reverse()
+        return "/".join(chain_of_names)
+
+    def get_path_for_quantity(self, quantity_uuid: UUID) -> str:
+        """Return the path to a quantity given its UUID
+
+        Return a string containing a POSIX-like path that lists the
+        sequence of entities to traverse before reaching this quantity.
+        """
+
+        quantity = self.query_quantity(quantity_uuid)
+        base_path = self.get_path_for_entity(quantity.entity)
+        return f"{base_path}/{quantity.name}"
