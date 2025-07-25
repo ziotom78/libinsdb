@@ -1,5 +1,7 @@
 # HEAD
 
+# Version 0.9.0
+
 -   Add a CLI program (`insdb`) to interactively browse a local database [#20](https://github.com/ziotom78/libinsdb/pull/20)
 
 -   Drop support for Python 3.9 and add support for Python 3.13 [#19](https://github.com/ziotom78/libinsdb/pull/19)
