@@ -71,9 +71,11 @@ def test_get_queried_objects():
 
     entity_uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     _ = db.query(f"/entities/{entity_uuid}")
+    assert db.get_path_for_entity(entity_uuid) == "LFI/frequency_030_ghz/27M"
 
     quantity_uuid = UUID("6d1d72ac-ad22-4e94-9ff4-4c3fa8d47c53")
     _ = db.query(f"/quantities/{quantity_uuid}")
+    assert db.get_path_for_quantity(quantity_uuid) == "LFI/frequency_030_ghz/27M/bandpass"
 
     # This is not being tracked…
     untracked_data_file_uuid = UUID("ed8ef738-ef1e-474b-b867-646c74f89694")
@@ -103,12 +105,24 @@ def test_query_release():
 def test_entry_hierarchy():
     db = load_mock_database()
 
+    assert len(db.root_entities) == 3
+    assert set(
+        [
+            UUID("564faff1-ef68-4e40-a2d1-9adb8d00d5c1"),
+            UUID("ff5c3ca2-6789-415e-ae4e-eb68d086baa4"),
+            UUID("ff2a87bd-9a64-4ab5-9456-d5ffeae9ea23"),
+        ]
+    ) == set(db.root_entities)
+
     # This is the "27M" entity
     uuid = UUID("8734a013-4184-412c-ab5a-963388beae34")
     child_entity = db.query_entity(uuid)
 
     # Check that the parent is the "frequency_030_ghz" entity
     assert child_entity.parent == UUID("b3386894-40a3-4664-aaf6-f78d944943e2")
+
+    assert db.get_path_for_entity(uuid) == "LFI/frequency_030_ghz/27M"
+    assert db.get_path_for_entity(child_entity.uuid) == "LFI/frequency_030_ghz/27M"
 
 
 def test_schema_formats():

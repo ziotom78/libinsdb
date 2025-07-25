@@ -14,7 +14,11 @@ dependencies = [
     "python-dateutil>=2.8.2,<3",
     "pyyaml>=6.0.1,<7",
     "types-pyyaml>=6.0.12.12,<7",
+    "rich>=14.0",
 ]
+
+[project.scripts]
+insdb = "libinsdb.__main__:main"
 
 [project.optional-dependencies]
 # Be sure to keep this in sync with [dependency-groups] later

@@ -30,7 +30,7 @@ class FormatSpecification:
 
     - ``title``: the title of the document
 
-    - ``doc_file_name``: a ``pathlib.Path`` object pointing to a local copy
+    - ``local_doc_file_path``: a ``pathlib.Path`` object pointing to a local copy
       of the document, or ``None`` if no document is provided.
 
     - ``doc_mime_type``: the MIME type of the document. This specifies

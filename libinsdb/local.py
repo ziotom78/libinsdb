@@ -105,7 +105,9 @@ def _walk_entity_tree_and_parse(
     objs: list[dict[str, Any]],
     base_path: str = "",
     parent: UUID | None = None,
-):
+) -> None:
+    """Traverse a tree of entities and build `dictionary`."""
+
     for obj_dict in objs:
         obj, children = _parse_entity(
             obj_dict=obj_dict,
@@ -226,6 +228,10 @@ class LocalInsDb(InstrumentDatabase):
     to create a :class:`.LocalInsDb` instance: just the JSON file containing the
     schema is read on the spot. Of course, if you do not have anything else than
     the JSON schema, you cannot call methods like :meth:`.query_data_file`.
+
+    The field `root_entities` is a list of UUIDs for those entities who do not
+    have a parent, i.e., the first entities that should be shown in a tree-like
+    view of the database.
     """
 
     def __init__(self, storage_path: Union[str, Path]):
@@ -244,6 +250,8 @@ class LocalInsDb(InstrumentDatabase):
 
         self.path_to_entity = {}  # type: dict[str, UUID]
         self.path_to_quantity = {}  # type: dict[str, UUID]
+
+        self.root_entities = []  # type: list[UUID]
 
         self.check_consistency()
         self.read_schema()
@@ -313,6 +321,7 @@ class LocalInsDb(InstrumentDatabase):
 
         self.entities = {}
         _walk_entity_tree_and_parse(self.entities, schema.get("entities", []))
+        self.root_entities = [x for x in self.entities if self.entities[x].parent is None]
 
         self.quantities = {}
         for obj_dict in schema.get("quantities", []):
