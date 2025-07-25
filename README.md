@@ -25,3 +25,9 @@ to install the additional dependencies needed to update the documentation and th
     uv run make -C docs html
 
 The index will be available in the folder `docs/_build/html/`.
+
+## Browsing the databases from the CLI
+
+Starting from version 0.9, Libinsdb includes a command-line program, `insdb`, that can be used to browse a local database.
+
+![](demo.gif)
