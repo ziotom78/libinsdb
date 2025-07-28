@@ -1,5 +1,7 @@
 # HEAD
 
+-   Document `insdb` in the User’s Manual [#21](https://github.com/ziotom78/libinsdb/pull/22)
+
 -   Add the `open` command to the CLI program `insdb` [#21](https://github.com/ziotom78/libinsdb/pull/21)
 
 # Version 0.9.0
