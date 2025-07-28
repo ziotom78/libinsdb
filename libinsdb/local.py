@@ -77,13 +77,15 @@ def _parse_format_spec(storage_path: Path, obj_dict: dict[str, Any]) -> FormatSp
 
     uuid = UUID(obj_dict["uuid"])
 
-    local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / doc_file_name
-    if not local_file.exists():
-        # Because of a bug in InstrumentDB, it might happen that the
-        # full file name lacks the UUID. We fix it here
-        local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / f"{uuid}_{doc_file_name}"
+    local_file = None
+    if doc_file_name:
+        local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / doc_file_name
         if not local_file.exists():
-            local_file = None
+            # Because of a bug in InstrumentDB, it might happen that the
+            # full file name lacks the UUID. We fix it here
+            local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / f"{uuid}_{doc_file_name}"
+            if not local_file.exists():
+                local_file = None
 
     return FormatSpecification(
         uuid=uuid,
