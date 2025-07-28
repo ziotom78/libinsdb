@@ -38,6 +38,7 @@ dev = [
 ]
 docs = [
     "sphinx>=7.1.2",
+    "sphinxcontrib.asciinema>=0.4",
 ]
 
 [tool.uv]
