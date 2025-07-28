@@ -1,5 +1,7 @@
 # HEAD
 
+-   Add the `open` command to the CLI program `insdb` [#21](https://github.com/ziotom78/libinsdb/pull/21)
+
 # Version 0.9.0
 
 -   Add a CLI program (`insdb`) to interactively browse a local database [#20](https://github.com/ziotom78/libinsdb/pull/20)
