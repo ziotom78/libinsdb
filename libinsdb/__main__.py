@@ -15,7 +15,7 @@ from rich.tree import Tree
 
 from .objects import Entity, Quantity, Release  # noqa: F401
 from .local import LocalInsDb
-
+from .version import LIBINSDB_VERSION
 
 PROMPT_CHARACTER = ">"
 
@@ -54,7 +54,7 @@ def clean_uuid_from_hyphens(text: str) -> str:
 class ImoBrowser(Cmd):
     "Parse an IMo file"
 
-    intro = """Welcome to the InstrumentDB shell.
+    intro = f"""Welcome to Libinsdb shell version {LIBINSDB_VERSION}.
 
 Type 'help' or '?' to list commands, 'quit' to exit.
 """
@@ -525,6 +525,16 @@ Type 'help' or '?' to list commands, 'quit' to exit.
         self._populate_subtree(tree, self.selected_entity_uuid)
 
         self.console.print(tree)
+        return False
+
+    def do_version(self, _):
+        """Print the version number of Libinsdb
+
+        Usage: version
+        """
+
+        self.console.print(f"Libinsdb version {LIBINSDB_VERSION}")
+        return False
 
     def do_quit(self, _):
         """Quit the program
@@ -551,6 +561,13 @@ def parse_args():
         help="Disable colors in the program",
         action="store_true",
         default=False,
+    )
+    parser.add_argument(
+        "--version",
+        "-v",
+        help="Print the version and quit",
+        action="version",
+        version=LIBINSDB_VERSION,
     )
     parser.add_argument(
         "-c",
