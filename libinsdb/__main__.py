@@ -525,6 +525,16 @@ Type 'help' or '?' to list commands, 'quit' to exit.
         self._populate_subtree(tree, self.selected_entity_uuid)
 
         self.console.print(tree)
+        return False
+
+    def do_version(self, _):
+        """Print the version number of Libinsdb
+
+        Usage: version
+        """
+
+        self.console.print(f"Libinsdb version {LIBINSDB_VERSION}")
+        return False
 
     def do_quit(self, _):
         """Quit the program
