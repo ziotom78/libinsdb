@@ -553,6 +553,13 @@ def parse_args():
         default=False,
     )
     parser.add_argument(
+        "--version",
+        "-v",
+        help="Print the version and quit",
+        action="version",
+        version=LIBINSDB_VERSION,
+    )
+    parser.add_argument(
         "-c",
         "--command",
         type=str,
