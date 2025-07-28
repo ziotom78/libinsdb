@@ -1,6 +1,8 @@
 # HEAD
 
--   Document `insdb` in the User’s Manual [#21](https://github.com/ziotom78/libinsdb/pull/22)
+-   Add the `--version` command-line switch and the `version` command to `insdb` [#23](https://github.com/ziotom78/libinsdb/pull/23)
+
+-   Document `insdb` in the User’s Manual [#22](https://github.com/ziotom78/libinsdb/pull/22)
 
 -   Add the `open` command to the CLI program `insdb` [#21](https://github.com/ziotom78/libinsdb/pull/21)
 
