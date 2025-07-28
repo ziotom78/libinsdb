@@ -69,17 +69,29 @@ _DB_FLATFILE_PLOT_FILES_DIR_NAME = "plot_files"
 _DB_FLATFILE_RELEASE_DOCUMENT_DIR_NAME = "release_documents"
 
 
-def _parse_format_spec(obj_dict: dict[str, Any]) -> FormatSpecification:
+def _parse_format_spec(storage_path: Path, obj_dict: dict[str, Any]) -> FormatSpecification:
     if "doc_file_name" in obj_dict:
         doc_file_name = Path(obj_dict["doc_file_name"])
     else:
         doc_file_name = None
 
+    uuid = UUID(obj_dict["uuid"])
+
+    local_file = None
+    if doc_file_name:
+        local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / doc_file_name
+        if not local_file.exists():
+            # Because of a bug in InstrumentDB, it might happen that the
+            # full file name lacks the UUID. We fix it here
+            local_file = storage_path / _DB_FLATFILE_FORMAT_SPEC_DIR_NAME / f"{uuid}_{doc_file_name}"
+            if not local_file.exists():
+                local_file = None
+
     return FormatSpecification(
-        uuid=UUID(obj_dict["uuid"]),
+        uuid=uuid,
         document_ref=obj_dict.get("document_ref", ""),
         title=obj_dict.get("title", ""),
-        local_doc_file_path=doc_file_name,
+        local_doc_file_path=local_file if doc_file_name is not None else None,
         doc_mime_type=obj_dict.get("doc_mime_type", ""),
         file_mime_type=obj_dict.get("file_mime_type", ""),
     )
@@ -316,7 +328,7 @@ class LocalInsDb(InstrumentDatabase):
     def parse_schema(self, schema: dict[str, Any]) -> None:
         self.format_specs = {}
         for obj_dict in schema.get("format_specifications", []):
-            cur_fmt_spec = _parse_format_spec(obj_dict)
+            cur_fmt_spec = _parse_format_spec(storage_path=self.storage_path, obj_dict=obj_dict)
             self.format_specs[cur_fmt_spec.uuid] = cur_fmt_spec
 
         self.entities = {}

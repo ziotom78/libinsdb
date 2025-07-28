@@ -2,6 +2,10 @@
 
 from argparse import ArgumentParser
 from cmd import Cmd
+import os
+from pathlib import Path
+import subprocess
+import sys
 from uuid import UUID
 
 from rich.console import Console
@@ -24,6 +28,27 @@ STYLES = {
 }
 
 DATETIME_FORMAT = "%Y-%m-%d"
+
+
+def open_file(filename: Path | str) -> None:
+    """Open a file with the application that was associated by the OS
+
+    This is a portable version of Python’s `os.startfile()` function,
+    which only works on Windows.
+    """
+
+    abs_path = Path(filename).absolute()
+
+    if sys.platform == "win32":
+        os.startfile(abs_path)
+    else:
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, abs_path])
+
+
+def clean_uuid_from_hyphens(text: str) -> str:
+    "Assuming that `text` is a UUID, remove any hyphen from it"
+    return str(text).replace("-", "")
 
 
 class ImoBrowser(Cmd):
@@ -347,10 +372,10 @@ Type 'help' or '?' to list commands, 'quit' to exit.
     def complete_show(self, text: str, _line: str, _beg_idx: int, _end_idx: int) -> list[str]:
         "Called whenever the user presses <TAB> while running the 'show' command"
 
-        text_bytes = text.replace("-", "")
+        text_bytes = clean_uuid_from_hyphens(text)
         matches = []  # typing: list[str]
-        list_of_uuids = list(self.imo.entities) + list(self.imo.quantities) + list(self.imo.data_files)
-        for cur_uuid in list_of_uuids:
+        list_of_possible_matches = list(self.imo.entities) + list(self.imo.quantities) + list(self.imo.data_files)
+        for cur_uuid in list_of_possible_matches:
             if cur_uuid.hex.startswith(text_bytes):
                 matches.append(str(cur_uuid))
 
@@ -387,16 +412,75 @@ Type 'help' or '?' to list commands, 'quit' to exit.
         self.console.print(data_file.metadata, highlight=True)
         return False
 
+    def matching_uuids(self, text: str, *lists_of_uuid) -> list[str]:
+        text_bytes = clean_uuid_from_hyphens(text)
+        matches = []  # typing: list[str]
+        for cur_list in lists_of_uuid:
+            for cur_uuid in list(cur_list):
+                if cur_uuid.hex.startswith(text_bytes):
+                    matches.append(str(cur_uuid))
+
+        return matches
+
     def complete_metadata(self, text: str, _line: str, _beg_idx: int, _end_idx: int) -> list[str]:
         "Called whenever the user presses <TAB> while running the 'metadata' command"
 
-        text_bytes = text.replace("-", "")
-        matches = []  # typing: list[str]
-        for cur_uuid in self.imo.data_files:
-            if cur_uuid.hex.startswith(text_bytes):
-                matches.append(str(cur_uuid))
+        return self.matching_uuids(text, self.imo.data_files)
 
-        return matches
+    def do_open(self, uuid_str: str):
+        """Open a data file or a format specification
+
+        Usage: open UUID
+
+        Use the default association provided by your operating system to
+        open the data file or format specification associated with UUID.
+        """
+
+        try:
+            uuid = UUID(uuid_str)
+        except ValueError:
+            self.console.print(
+                "you must provide a valid UUID",
+                style=STYLES["error"],
+            )
+            return False
+
+        if uuid in self.imo.data_files:
+            file_name = self.imo.data_files[uuid].data_file_local_path
+            if file_name is None:
+                self.console.print(
+                    'no data file associated with "{}". Try using "metadata" instead of "open"'.format(
+                        self.imo.data_files[uuid].name
+                    )
+                )
+                return False
+
+            self.console.print(f'opening data file "{file_name}"')
+            open_file(file_name)
+        elif uuid in self.imo.format_specs:
+            file_name = self.imo.format_specs[uuid].local_doc_file_path
+            if file_name is None:
+                self.console.print(
+                    "no real file for specification document was provided. Contact who created the database"
+                )
+            self.console.print(f'opening format specification "{file_name}"')
+            open_file(file_name)
+        else:
+            self.console.print(
+                f"UUID {uuid} is not a data file or a format specification",
+                style=STYLES["error"],
+            )
+
+        return False
+
+    def complete_open(self, text: str, _line: str, _beg_idx: int, _end_idx: int) -> list[str]:
+        "Called whenever the user presses <TAB> while running the 'open' command"
+
+        return self.matching_uuids(
+            text,
+            self.imo.data_files.keys(),
+            self.imo.format_specs.keys(),
+        )
 
     def do_releases(self, _):
         """Print a list of the releases defined in the database
