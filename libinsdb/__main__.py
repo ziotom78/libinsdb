@@ -15,7 +15,7 @@ from rich.tree import Tree
 
 from .objects import Entity, Quantity, Release  # noqa: F401
 from .local import LocalInsDb
-
+from .version import LIBINSDB_VERSION
 
 PROMPT_CHARACTER = ">"
 
@@ -54,7 +54,7 @@ def clean_uuid_from_hyphens(text: str) -> str:
 class ImoBrowser(Cmd):
     "Parse an IMo file"
 
-    intro = """Welcome to the InstrumentDB shell.
+    intro = f"""Welcome to Libinsdb shell version {LIBINSDB_VERSION}.
 
 Type 'help' or '?' to list commands, 'quit' to exit.
 """
