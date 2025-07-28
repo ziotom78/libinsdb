@@ -34,4 +34,5 @@ html_static_path = ["_static"]
 # Extensions
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinxcontrib.asciinema",
 ]

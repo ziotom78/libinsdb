@@ -11,6 +11,7 @@ Welcome to Libinsdb's documentation!
    introduction
    installation
    tutorial
+   cli
    reference
 
 Indices and tables

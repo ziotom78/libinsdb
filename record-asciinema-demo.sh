@@ -16,12 +16,12 @@
 #    --overwrite \
 #    --quiet \
 #    -c sh \
-#    libinsdb-96x24.asciinema
+#    docs/libinsdb-96x24.asciinema
 #
 # Then run this script from another window. The output file can be
 # converted using asciinema-agg:
 #
-#    agg libinsdb-96x24.asciinema demo.gif
+#    agg docs/libinsdb-96x24.asciinema demo.gif
 #
 # (This is the reason for the --format= parameter used with `asciinema
 # rec`, as at the time of writing `agg` does not recognize the new

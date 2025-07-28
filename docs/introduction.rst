@@ -61,3 +61,14 @@ Local vs remote databases
 
 As shown in the two examples above, Libinsdb lets you to interface a local copy or a remote database running the full server. There is one important difference between the two cases: you can alter the content of the database only if you are accessing a remote copy, while a local copy is always read-only. The reason for this is that changes in the database are handled by the remote InstrumentDB server, which implements full validation checks for every change.
 
+
+Browsing databases
+------------------
+
+Starting from version 0.9.0, Libinsdb provides the ``insdb`` program
+to let users navigate local databases. Here is a short example:
+
+Here is a short demo of its capabilities:
+
+.. asciinema:: libinsdb-96x24.asciinema
+   :preload: 1

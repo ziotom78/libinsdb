@@ -24,6 +24,7 @@ insdb = "libinsdb.__main__:main"
 # Be sure to keep this in sync with [dependency-groups] later
 docs = [
   "sphinx>=7.1.2",
+  "sphinxcontrib.asciinema>=0.4",
 ]
 
 [dependency-groups]
