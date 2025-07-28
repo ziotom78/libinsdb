@@ -260,6 +260,7 @@ dev = [
 ]
 docs = [
     { name = "sphinx" },
+    { name = "sphinxcontrib-asciinema" },
 ]
 
 [package.metadata]
@@ -286,7 +287,10 @@ dev = [
     { name = "types-python-dateutil", specifier = ">=2.8.19.14,<3" },
     { name = "types-requests", specifier = ">=2.31.0.2,<3" },
 ]
-docs = [{ name = "sphinx", specifier = ">=7.1.2" }]
+docs = [
+    { name = "sphinx", specifier = ">=7.1.2" },
+    { name = "sphinxcontrib-asciinema", specifier = ">=0.4" },
+]
 
 [[package]]
 name = "markdown-it-py"
